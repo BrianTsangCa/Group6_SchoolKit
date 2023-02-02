@@ -3,4 +3,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Tasks</string>
     <string name="title_notifications">Create new task</string>
+    <string name="txtAllTasks">All Tasks...</string>
 </resources>
