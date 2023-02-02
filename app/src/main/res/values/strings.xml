@@ -4,4 +4,8 @@
     <string name="title_dashboard">Tasks</string>
     <string name="title_notifications">Create new task</string>
     <string name="txtAllTasks">All Tasks...</string>
+    <string name="btnongoing">On Going...</string>
+    <string name="btncompleted">Completed</string>
+    <string name="cardTextTaskTitle">Please insert title here</string>
+    <string name="txtTaskTitle">Task\'s title</string>
 </resources>
