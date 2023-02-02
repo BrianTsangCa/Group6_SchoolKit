@@ -13,7 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.group6_schoolkit.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-//comment
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
