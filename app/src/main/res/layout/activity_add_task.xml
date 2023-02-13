@@ -177,17 +177,17 @@
         app:layout_constraintTop_toBottomOf="@+id/txtView_CreatePage_comment" />
 
     <Button
-        android:id="@+id/btn_SaveChanges"
+        android:id="@+id/btn_CreateTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Create Task"
-        app:layout_constraintEnd_toStartOf="@+id/btn_Delete"
+        app:layout_constraintEnd_toStartOf="@+id/btn_Cancel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_CreatePage_comment" />
 
     <Button
-        android:id="@+id/btn_Delete"
+        android:id="@+id/btn_Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

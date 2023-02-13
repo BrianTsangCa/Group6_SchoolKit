@@ -18,15 +18,15 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        title=findViewById(R.id.EditTxt_EditPage_title);
-        desc = findViewById(R.id.EditTxt_EditPage_description);
-        due = findViewById(R.id.EditTxt_EditPage_duedate);
-        importance=findViewById(R.id.EditTxt_EditPage_importance);
-        category=findViewById(R.id.EditTxt_EditPage_category);
-        course=findViewById(R.id.EditTxt_EditPage_course);
-        owner=findViewById(R.id.EditTxt_EditPage_Owner);
-        comment=findViewById(R.id.EditTxt_EditPage_comment);
-        btn_createTask=findViewById(R.id.btn_SaveChanges);
+        title=findViewById(R.id.EditTxt_CreatePage_title);
+        desc = findViewById(R.id.EditTxt_CreatePage_description);
+        due = findViewById(R.id.EditTxt_CreatePage_duedate);
+        importance=findViewById(R.id.EditTxt_CreatePage_importance);
+        category=findViewById(R.id.EditTxt_CreatePage_category);
+        course=findViewById(R.id.EditTxt_CreatePage_course);
+        owner=findViewById(R.id.EditTxt_CreatePage_Owner);
+        comment=findViewById(R.id.EditTxt_CreatePage_comment);
+        btn_createTask=findViewById(R.id.btn_CreateTask);
 
         btn_createTask.setOnClickListener((View view)-> {
                 TaskModel taskObject = new TaskModel(
@@ -43,7 +43,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 TaskUtil.getInstance().addTask(taskObject);
             startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
         });
-        btn_Cancel=findViewById(R.id.btn_Delete);
+        btn_Cancel=findViewById(R.id.btn_Cancel);
         btn_Cancel.setOnClickListener((View v)-> {
             startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
         });
