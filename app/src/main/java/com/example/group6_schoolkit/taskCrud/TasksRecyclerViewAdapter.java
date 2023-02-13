@@ -2,7 +2,6 @@ package com.example.group6_schoolkit.taskCrud;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,13 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtName.setText(tasks.get(position).getTitle());
+        holder.txtTitle.setText(tasks.get(position).getTitle());
+
+        holder.txtAuthor.setText(tasks.get(position).getOwner());
+        holder.txtDescription.setText(tasks.get(position).getDescription());
+        holder.txtViewDate.setText(tasks.get(position).getDueDate());
+
+
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,20 +53,19 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("TITLE", tasks.get(position).getTitle());
                 intent.putExtra("DESC", tasks.get(position).getDescription());
                 intent.putExtra("OWNER", tasks.get(position).getOwner());
+                intent.putExtra("DATE",tasks.get(position).getDueDate());
                 mContext.startActivity(intent);
             }
         });
 
-        holder.txtAuthor.setText(tasks.get(position).getOwner());
-        holder.txtDescription.setText(tasks.get(position).getDescription());
 
-        if(tasks.get(position).getExpanded()){
-            holder.expandedRelativeLayout.setVisibility(View.VISIBLE);
-            holder.downArrow.setVisibility(View.GONE);
-        }else{
-            holder.expandedRelativeLayout.setVisibility(View.GONE);
-            holder.downArrow.setVisibility(View.VISIBLE);
-        }
+     //   if(tasks.get(position).getExpanded()){
+      //      holder.expandedRelativeLayout.setVisibility(View.VISIBLE);
+      //      holder.downArrow.setVisibility(View.GONE);
+     //   }else{
+      //      holder.expandedRelativeLayout.setVisibility(View.GONE);
+      //      holder.downArrow.setVisibility(View.VISIBLE);
+      //  }
     }
 
     @Override
@@ -77,41 +81,46 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
         private ImageView imgBook;
-        private TextView txtName;
-        private ImageView downArrow, upArrow;
-        private RelativeLayout expandedRelativeLayout;
+        private TextView txtTitle;
+        private TextView txtViewDate;
+
+
+        // private ImageView downArrow, upArrow;
+      //  private RelativeLayout expandedRelativeLayout;
         private TextView txtAuthor, txtDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             parent=itemView.findViewById(R.id.parent);
-            imgBook=itemView.findViewById(R.id.imageId);
-            txtName=itemView.findViewById(R.id.txtBookName);
+            imgBook=itemView.findViewById(R.id.userimage);
+            txtViewDate = itemView.findViewById(R.id.textViewDate);
+           // txtName=itemView.findViewById(R.id.textViewTitle);
 
-            downArrow=itemView.findViewById(R.id.btnDownArrow);
-            upArrow=itemView.findViewById(R.id.btnUpArrow);
-            expandedRelativeLayout=itemView.findViewById(R.id.expandedRelLayout);
-            txtAuthor=itemView.findViewById(R.id.txtAuthor);
-            txtDescription = itemView.findViewById(R.id.txtShortDesc);
+           // downArrow=itemView.findViewById(R.id.btnDownArrow);
+           // upArrow=itemView.findViewById(R.id.btnUpArrow);
+            //expandedRelativeLayout=itemView.findViewById(R.id.expandedRelLayout);
+            txtTitle= itemView.findViewById(R.id.textViewTitle);
+            txtAuthor=itemView.findViewById(R.id.textViewAuthor);
+            txtDescription = itemView.findViewById(R.id.textViewDescription);
 
-            downArrow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TaskModel task = tasks.get(getAdapterPosition());
-                    task.setExpanded(!task.getExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
+     //       downArrow.setOnClickListener(new View.OnClickListener() {
+      //          @Override
+     //           public void onClick(View view) {
+     //               TaskModel task = tasks.get(getAdapterPosition());
+     //               task.setExpanded(!task.getExpanded());
+     //               notifyItemChanged(getAdapterPosition());
+     //           }
+     //       });
 
-            upArrow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    TaskModel task = tasks.get(getAdapterPosition());
-                    task.setExpanded(!task.getExpanded());
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
+     //       upArrow.setOnClickListener(new View.OnClickListener() {
+     //           @Override
+      //          public void onClick(View view) {
+      //              TaskModel task = tasks.get(getAdapterPosition());
+     //               task.setExpanded(!task.getExpanded());
+     //               notifyItemChanged(getAdapterPosition());
+      //          }
+      //      });
 
         }
     }

@@ -8,4 +8,5 @@
     <string name="btncompleted">Completed</string>
     <string name="cardTextTaskTitle">Please insert title here</string>
     <string name="txtTaskTitle">Task\'s title</string>
+    <string name="textViewAllTasks">All Task...</string>
 </resources>
