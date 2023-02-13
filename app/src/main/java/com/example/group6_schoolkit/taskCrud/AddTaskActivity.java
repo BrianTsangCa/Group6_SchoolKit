@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 
@@ -29,6 +30,23 @@ public class AddTaskActivity extends AppCompatActivity {
         btn_createTask=findViewById(R.id.btn_CreateTask);
 
         btn_createTask.setOnClickListener((View view)-> {
+            if(title.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter title",Toast.LENGTH_SHORT).show();
+            }else if(desc.getText().toString().length()==00){
+                Toast.makeText(AddTaskActivity.this,"Please enter description",Toast.LENGTH_SHORT).show();
+            }else if(due.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter due date",Toast.LENGTH_SHORT).show();
+            }else if(importance.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter importance",Toast.LENGTH_SHORT).show();
+            }else if(category.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter category",Toast.LENGTH_SHORT).show();
+            }else if(course.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter course",Toast.LENGTH_SHORT).show();
+            }else if(owner.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter Owner",Toast.LENGTH_SHORT).show();
+            }else if( comment.getText().toString().length()==0){
+                Toast.makeText(AddTaskActivity.this,"Please enter comment",Toast.LENGTH_SHORT).show();
+            }else{
                 TaskModel taskObject = new TaskModel(
                         title.getText().toString(),
                         desc.getText().toString(),
@@ -41,7 +59,8 @@ public class AddTaskActivity extends AppCompatActivity {
                         1,1
                 );
                 TaskUtil.getInstance().addTask(taskObject);
-            startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
+                startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
+            }
         });
         btn_Cancel=findViewById(R.id.btn_Cancel);
         btn_Cancel.setOnClickListener((View v)-> {
