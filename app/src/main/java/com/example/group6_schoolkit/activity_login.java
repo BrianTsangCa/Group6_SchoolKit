@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.group6_schoolkit.MainActivity;
+import com.example.group6_schoolkit.taskCrud.HomeTaskCrud;
 
 public class activity_login extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class activity_login extends AppCompatActivity {
         btn_LoginPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity_login.this, MainActivity.class);
+                Intent intent = new Intent(activity_login.this, HomeTaskCrud.class);
                 startActivity(intent);
             }
         });
