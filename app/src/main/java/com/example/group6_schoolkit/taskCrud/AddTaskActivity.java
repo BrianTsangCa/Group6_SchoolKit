@@ -2,6 +2,7 @@ package com.example.group6_schoolkit.taskCrud;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,24 +12,23 @@ import com.example.group6_schoolkit.R;
 
 public class AddTaskActivity extends AppCompatActivity {
     EditText title,desc, due, importance, category, course,owner,comment;
-    Button btnSaveTask;
+    Button btn_createTask,btn_Cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        title=findViewById(R.id.EditTextTitle);
-        desc = findViewById(R.id.EditTextDesc);
-        due = findViewById(R.id.EditTextDue);
-        importance=findViewById(R.id.EditTextImp);
-        category=findViewById(R.id.EditTextCategory);
-        course=findViewById(R.id.EditTextCourse);
-        owner=findViewById(R.id.EditTextOwner);
-        comment=findViewById(R.id.EditTextComment);
-        btnSaveTask=findViewById(R.id.btnSaveTask);
 
-        btnSaveTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        title=findViewById(R.id.EditTxt_CreatePage_title);
+        desc = findViewById(R.id.EditTxt_CreatePage_description);
+        due = findViewById(R.id.EditTxt_CreatePage_duedate);
+        importance=findViewById(R.id.EditTxt_CreatePage_importance);
+        category=findViewById(R.id.EditTxt_CreatePage_category);
+        course=findViewById(R.id.EditTxt_CreatePage_course);
+        owner=findViewById(R.id.EditTxt_CreatePage_Owner);
+        comment=findViewById(R.id.EditTxt_CreatePage_comment);
+        btn_createTask=findViewById(R.id.btn_createTask);
+
+        btn_createTask.setOnClickListener((View view)-> {
                 TaskModel taskObject = new TaskModel(
                         title.getText().toString(),
                         desc.getText().toString(),
@@ -40,9 +40,12 @@ public class AddTaskActivity extends AppCompatActivity {
                         comment.getText().toString(),
                         1,1
                 );
-
                 TaskUtil.getInstance().addTask(taskObject);
-            }
+            startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
+        });
+        btn_Cancel=findViewById(R.id.btn_Cancel);
+        btn_Cancel.setOnClickListener((View v)-> {
+            startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
         });
 
     }
