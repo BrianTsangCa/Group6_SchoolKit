@@ -6,11 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.group6_schoolkit.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class HomeTaskCrud extends AppCompatActivity {
     Button button, button2;
+//    ArrayList<String> sampleList = new ArrayList<>(Arrays.asList("task1", "task2", "Task3"));
+    ListView listMy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +24,10 @@ public class HomeTaskCrud extends AppCompatActivity {
 
         button = findViewById(R.id.btnSeeAllTasks);
         button2 = findViewById(R.id.btnAddTask);
+        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(TaskUtil.getInstance().getAllTasks());
+        listMy = findViewById(R.id.listViewHomeTaskCrud);
+        listMy.setAdapter(adapter);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
