@@ -54,6 +54,13 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("DESC", tasks.get(position).getDescription());
                 intent.putExtra("OWNER", tasks.get(position).getOwner());
                 intent.putExtra("DATE",tasks.get(position).getDueDate());
+                intent.putExtra("IMPORTANCE",tasks.get(position).getImportance());
+                intent.putExtra("CATEGORY",tasks.get(position).getCategory());
+                intent.putExtra("COURSE",tasks.get(position).getCourse());
+                intent.putExtra("OWNER",tasks.get(position).getOwner());
+                intent.putExtra("COMMENT",tasks.get(position).getCommentBox());
+                intent.putExtra("DESCRIPTION",tasks.get(position).getDescription());
+
                 mContext.startActivity(intent);
             }
         });
