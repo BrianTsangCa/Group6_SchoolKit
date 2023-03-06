@@ -70,6 +70,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void updateTask(int id, TaskModel taskModel){
+        db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(COL_2, taskModel.getTitle());
+        values.put(COL_3, taskModel.getDescription());
+        values.put(COL_4, taskModel.getDueDate());
+        values.put(COL_5, taskModel.getImportance());
+        values.put(COL_6, taskModel.getCategory());
+        values.put(COL_7, taskModel.getCourse());
+        values.put(COL_8, taskModel.getOwner());
+        values.put(COL_9, taskModel.getCommentBox());
+        values.put(COL_10, taskModel.getStatus());
+        db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
+    }
+
     public void deleteTask(int id){
         db =this.getWritableDatabase();
         db.delete(TABLE_NAME, "ID=?", new String[]{String.valueOf(id)});

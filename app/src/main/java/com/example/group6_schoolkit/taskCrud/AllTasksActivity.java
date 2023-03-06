@@ -28,7 +28,8 @@ public class AllTasksActivity extends AppCompatActivity {
         myDB = new DataBaseHelper(AllTasksActivity.this);
         //for testing only. creating 1 instance of task
         myDB.insertTask(new TaskModel("title1111","desc1", "dueDate1", "imp", "category", "course", "owner", "comment", 1));
-        Toast.makeText(this, "size is " + myDB.getAllTasks().size(), Toast.LENGTH_SHORT).show();
+        //this is to check the id of the last item
+        Toast.makeText(this, "last ID is " + myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId(), Toast.LENGTH_SHORT).show();
 
         deleteAll=findViewById(R.id.deleteAll);
         adapter=new TasksRecyclerViewAdapter(this);
@@ -49,5 +50,10 @@ public class AllTasksActivity extends AppCompatActivity {
                 adapter.setBooks(myDB.getAllTasks());
             }
         });
+
+        //testing update function
+//        myDB.updateTask(21, new TaskModel("title1111_UPDATED","desc1", "dueDate1", "imp", "category", "course", "owner", "comment", 1));
+//        adapter.setBooks(myDB.getAllTasks());
     }
+
 }

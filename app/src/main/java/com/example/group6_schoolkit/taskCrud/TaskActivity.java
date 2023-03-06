@@ -23,7 +23,7 @@ public class TaskActivity extends AppCompatActivity {
         txtView5=findViewById(R.id.textView5);
 
         Intent intent=getIntent();
-        txtView3.setText(intent.getStringExtra("TITLE"));
+        txtView3.setText(intent.getStringExtra("TITLE")+"\n"+intent.getStringExtra("ID"));
         txtView5.setText(intent.getStringExtra("DESC"));
         txtView4.setText(intent.getStringExtra("OWNER"));
 //        btn_edit=findViewById(R.id.btn_edit);
