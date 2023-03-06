@@ -56,7 +56,7 @@ public class AddTaskActivity extends AppCompatActivity {
                         course.getText().toString(),
                         owner.getText().toString(),
                         comment.getText().toString(),
-                        1,1
+                        1
                 );
                 TaskUtil.getInstance().addTask(taskObject);
                 startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));

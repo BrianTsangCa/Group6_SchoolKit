@@ -14,9 +14,9 @@ public class TaskUtil {
     }
 
     private void initData() {
-        allTasks.add(new TaskModel("title1","desc1", "dueDate1", "imp", "category", "course", "owner", "comment", 1, 1));
-        allTasks.add(new TaskModel("title2","desc2", "dueDate12", "imp", "category", "course", "owner2", "comment", 1, 2));
-        allTasks.add(new TaskModel("title3","desc3", "dueDate13", "imp", "category", "course", "owner3", "comment", 1, 3));
+        allTasks.add(new TaskModel("title1","desc1", "dueDate1", "imp", "category", "course", "owner", "comment", 1));
+        allTasks.add(new TaskModel("title2","desc2", "dueDate12", "imp", "category", "course", "owner2", "comment", 1));
+        allTasks.add(new TaskModel("title3","desc3", "dueDate13", "imp", "category", "course", "owner3", "comment", 1));
     }
 
     public static TaskUtil getInstance(){

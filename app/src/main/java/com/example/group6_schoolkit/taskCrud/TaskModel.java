@@ -16,7 +16,7 @@ public class TaskModel {
 
     private Boolean isExpanded;
 
-    public TaskModel(String title, String description, String dueDate, String importance, String category, String course, String owner, String commentBox, int status, int id) {
+    public TaskModel(String title, String description, String dueDate, String importance, String category, String course, String owner, String commentBox, int status) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -26,7 +26,7 @@ public class TaskModel {
         this.owner = owner;
         this.commentBox = commentBox;
         this.status=status;
-        this.id=id;
+//        this.id=id;
         isExpanded=false;
     }
 
