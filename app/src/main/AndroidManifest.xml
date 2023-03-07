@@ -29,7 +29,7 @@
             android:name=".taskCrud.AddTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".taskCrud.TaskActivity"
+            android:name=".taskCrud.EditTaskActivity"
             android:exported="false" />
         <activity
             android:name=".taskCrud.AllTasksActivity"

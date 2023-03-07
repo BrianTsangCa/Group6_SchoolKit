@@ -35,10 +35,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
-
-
-
-
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null,  1);
     }
