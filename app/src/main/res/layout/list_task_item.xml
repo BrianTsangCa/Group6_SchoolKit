@@ -59,11 +59,23 @@
             android:id="@+id/textViewAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="88dp"
             android:padding="3dp"
             android:text="Author"
             app:layout_constraintBottom_toTopOf="@+id/textViewDescription"
-            app:layout_constraintStart_toEndOf="@+id/textViewDate" />
+            app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.975" />
+
+        <Button
+            android:id="@+id/buttonImportance"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            app:cornerRadius="60px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.577"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="2dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

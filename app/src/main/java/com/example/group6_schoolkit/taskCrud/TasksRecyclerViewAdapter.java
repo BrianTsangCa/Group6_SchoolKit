@@ -2,9 +2,11 @@ package com.example.group6_schoolkit.taskCrud;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,13 +45,22 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         holder.txtAuthor.setText(tasks.get(position).getOwner());
         holder.txtDescription.setText(tasks.get(position).getDescription());
         holder.txtViewDate.setText(tasks.get(position).getDueDate());
+        holder.btnImportance.setText(tasks.get(position).getImportance());
 
+        if(holder.btnImportance.getText().toString().equals("High")){
+            holder.btnImportance.setBackgroundColor(Color.RED);
+        }else if(holder.btnImportance.getText().toString().equals("Medium")){
+            holder.btnImportance.setBackgroundColor(Color.BLUE);
+        }else if(holder.btnImportance.getText().toString().equals("Low")){
+            holder.btnImportance.setBackgroundColor(Color.CYAN);
+        }
 
+        //This is for Task Details
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "task is clickd", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, TaskActivity.class);
+                Intent intent = new Intent(mContext, EditTaskActivity.class);
                 intent.putExtra("TITLE", tasks.get(position).getTitle());
                 intent.putExtra("DESC", tasks.get(position).getDescription());
                 intent.putExtra("OWNER", tasks.get(position).getOwner());
@@ -88,13 +99,13 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
         private ImageView imgBook;
-        private TextView txtTitle;
+        private TextView txtTitle,txtAuthor, txtDescription;
         private TextView txtViewDate;
+        private Button btnImportance;
 
 
         // private ImageView downArrow, upArrow;
       //  private RelativeLayout expandedRelativeLayout;
-        private TextView txtAuthor, txtDescription;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,32 +113,14 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             parent=itemView.findViewById(R.id.parent);
             imgBook=itemView.findViewById(R.id.userimage);
             txtViewDate = itemView.findViewById(R.id.textViewDate);
-           // txtName=itemView.findViewById(R.id.textViewTitle);
-
-           // downArrow=itemView.findViewById(R.id.btnDownArrow);
-           // upArrow=itemView.findViewById(R.id.btnUpArrow);
-            //expandedRelativeLayout=itemView.findViewById(R.id.expandedRelLayout);
             txtTitle= itemView.findViewById(R.id.textViewTitle);
             txtAuthor=itemView.findViewById(R.id.textViewAuthor);
             txtDescription = itemView.findViewById(R.id.textViewDescription);
+            btnImportance = itemView.findViewById(R.id.buttonImportance);
 
-     //       downArrow.setOnClickListener(new View.OnClickListener() {
-      //          @Override
-     //           public void onClick(View view) {
-     //               TaskModel task = tasks.get(getAdapterPosition());
-     //               task.setExpanded(!task.getExpanded());
-     //               notifyItemChanged(getAdapterPosition());
-     //           }
-     //       });
 
-     //       upArrow.setOnClickListener(new View.OnClickListener() {
-     //           @Override
-      //          public void onClick(View view) {
-      //              TaskModel task = tasks.get(getAdapterPosition());
-     //               task.setExpanded(!task.getExpanded());
-     //               notifyItemChanged(getAdapterPosition());
-      //          }
-      //      });
+
+
 
         }
     }

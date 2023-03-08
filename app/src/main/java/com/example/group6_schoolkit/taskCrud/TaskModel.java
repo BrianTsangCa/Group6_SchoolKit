@@ -79,7 +79,9 @@ public class TaskModel {
     }
 
     public void setImportance(String importance) {
-        this.importance = importance;
+
+            this.importance = importance;
+
     }
 
     public void setCategory(String category) {
