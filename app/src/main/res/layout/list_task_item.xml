@@ -10,7 +10,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="411dp"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:background="#FFDBA7"
+        android:padding="12dp"
+        android:paddingTop="10dp">
 
         <ImageView
             android:id="@+id/userimage"

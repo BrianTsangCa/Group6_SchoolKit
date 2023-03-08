@@ -2,6 +2,7 @@ package com.example.group6_schoolkit.taskCrud;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +63,20 @@ public class EditTaskActivity extends AppCompatActivity {
 //                startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
 //            }
 //        });
+
+        //getExtra from all tasks
+        Intent intent =getIntent();
+        title.setText(intent.getExtras().getString("TITLE"));
+        Log.d("getEx:",intent.getExtras().getString("TITLE"));
+        owner.setText(intent.getExtras().getString("OWNER"));
+        due.setText(intent.getExtras().getString("DATE"));
+        importance.setText(intent.getExtras().getString("IMPORTANCE"));
+        category.setText(intent.getExtras().getString("CATEGORY"));
+        course.setText(intent.getExtras().getString("COURSE"));
+        comment.setText(intent.getExtras().getString("COMMENT"));
+        desc.setText(intent.getExtras().getString("DESCRIPTION"));
+
+
 
     }
 }

@@ -3,6 +3,7 @@ package com.example.group6_schoolkit.taskCrud;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("IMPORTANCE",tasks.get(position).getImportance());
                 intent.putExtra("CATEGORY",tasks.get(position).getCategory());
                 intent.putExtra("COURSE",tasks.get(position).getCourse());
-                intent.putExtra("OWNER",tasks.get(position).getOwner());
+                //intent.putExtra("OWNER",tasks.get(position).getOwner());
                 intent.putExtra("COMMENT",tasks.get(position).getCommentBox());
                 intent.putExtra("DESCRIPTION",tasks.get(position).getDescription());
                 intent.putExtra("ID", tasks.get(position).getId());

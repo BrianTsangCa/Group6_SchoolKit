@@ -45,7 +45,18 @@ public class HomeTaskCrud extends AppCompatActivity {
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
 
+
+
+        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(HomeTaskCrud.this, AllTasksActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
         taskHomeTitle.setText("WELCOME "+"\n"+user.getEmail());
+
 
 
         button.setOnClickListener(new View.OnClickListener() {
