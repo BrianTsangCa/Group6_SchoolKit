@@ -9,4 +9,9 @@
     <string name="cardTextTaskTitle">Please insert title here</string>
     <string name="txtTaskTitle">Task\'s title</string>
     <string name="textViewAllTasks">All Task...</string>
+    <string-array name="importance">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
 </resources>
