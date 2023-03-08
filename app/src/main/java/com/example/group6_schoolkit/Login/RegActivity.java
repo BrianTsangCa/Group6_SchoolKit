@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegActivity extends AppCompatActivity {
     Button buttonLogin,buttonRegister;
@@ -50,13 +52,23 @@ public class RegActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String _email = editTextTextEmailAddress.getText().toString().trim();
                 String _password = editTextTextPassword.getText().toString().trim();
+                String _name=editTextTextPersonName.getText().toString().trim();
 
                 firebaseAuth.createUserWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegActivity.this, "Register Success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegActivity.this, activity_login.class));
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(_name)
+                                    .build();
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()) {
+                                            Toast.makeText(RegActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegActivity.this, activity_login.class));
+                                        }
+                                    });
                         }else{
                             Toast.makeText(RegActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

@@ -55,7 +55,7 @@ public class HomeTaskCrud extends AppCompatActivity {
             }
         });
 
-        taskHomeTitle.setText("WELCOME "+"\n"+user.getEmail());
+        taskHomeTitle.setText("WELCOME "+"\n"+user.getDisplayName());
 
 
 
