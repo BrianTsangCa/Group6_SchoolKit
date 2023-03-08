@@ -41,8 +41,14 @@ public class CustomAdapterForListVIew extends BaseAdapter {
             view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.taskitemviewforlistview, viewGroup, false);
         }
         //set text view
-        TextView txtview=view.findViewById(R.id.textviewforlistview);
-        txtview.setText(nameLists.get(i).getDescription().toString() +"\n"+ nameLists.get(i).getTitle().toString());
+        TextView txtviewHomeTitle=view.findViewById(R.id.textViewHomeTitle);
+        TextView txtViewHomeDate = view.findViewById(R.id.textViewHomeDate);
+        TextView txtViewHomeDes = view.findViewById(R.id.textViewHomeDes);
+
+        txtviewHomeTitle.setText(nameLists.get(i).getTitle().toString());
+        txtViewHomeDate.setText(nameLists.get(i).getDueDate().toString());
+        txtViewHomeDes.setText(nameLists.get(i).getDescription().toString());
+
         //drawable?
 
 
