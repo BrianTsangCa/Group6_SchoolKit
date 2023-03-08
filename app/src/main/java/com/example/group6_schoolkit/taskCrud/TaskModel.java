@@ -9,7 +9,7 @@ public class TaskModel {
     private String course;
     private String owner;
     private String commentBox;
-
+    private static int lastId = 0;
     private int id;
 
     private int status;
@@ -26,7 +26,7 @@ public class TaskModel {
         this.owner = owner;
         this.commentBox = commentBox;
         this.status=status;
-//        this.id=id;
+        this.id=++lastId;
         isExpanded=false;
     }
 

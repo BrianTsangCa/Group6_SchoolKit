@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_importance" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_EditPage_importance" />
 
     <TextView
         android:id="@+id/txtView_EditPage_category"
@@ -113,17 +113,16 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_importance" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_EditPage_importance" />
 
-    <EditText
-        android:id="@+id/EditTxt_EditPage_importance"
+    <Spinner
+        android:id="@+id/spinner_EditPage_importance"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:entries="@array/importance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
