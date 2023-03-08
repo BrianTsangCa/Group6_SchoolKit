@@ -79,7 +79,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
+                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });
