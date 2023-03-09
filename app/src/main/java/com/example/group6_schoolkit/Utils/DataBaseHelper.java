@@ -92,6 +92,41 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, null, null);
     }
 
+    public ArrayList<TaskModel> getTasksForDate(int year, int month, int dayOfMonth){
+        db=this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try{
+            String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +
+                    "strftime('%Y-%m-%d', " + COL_4 + ") = ?";
+            c = db.rawQuery(query, new String[]{String.format("%04d-%02d-%02d", year, month+1, dayOfMonth)});
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)) );
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        modelList.add(task);
+
+                    }while(c.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
 
     public ArrayList<TaskModel> getAllTasks(){
         db=this.getWritableDatabase();

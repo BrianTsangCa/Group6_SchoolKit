@@ -2,10 +2,12 @@ package com.example.group6_schoolkit.taskCrud;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -13,11 +15,17 @@ import android.widget.Toast;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class AddTaskActivity extends AppCompatActivity {
     private EditText title,desc, due, category, course,owner,comment;
     private Button btn_createTask,btn_Cancel;
     private Spinner spinner_CreatePage_importance;
     private DataBaseHelper myDB;
+    private Calendar selectedDate = Calendar.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +34,34 @@ public class AddTaskActivity extends AppCompatActivity {
         title=findViewById(R.id.EditTxt_CreatePage_title);
         desc = findViewById(R.id.EditTxt_CreatePage_description);
         due = findViewById(R.id.EditTxt_CreatePage_duedate);
+        due.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.getTime()));
+        due.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int year = selectedDate.get(Calendar.YEAR);
+                int month = selectedDate.get(Calendar.MONTH);
+                int day = selectedDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        AddTaskActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                // update selectedDate with the new date
+                                selectedDate.set(year, monthOfYear, dayOfMonth);
+
+                                // format the selected date using SimpleDateFormat
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                String formattedDate = sdf.format(selectedDate.getTime());
+
+                                // update the EditText or TextView with the formatted date
+                                due.setText(formattedDate);
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+            }
+        });
         spinner_CreatePage_importance=findViewById(R.id.spinner_CreatePage_importance);
         category=findViewById(R.id.EditTxt_CreatePage_category);
         course=findViewById(R.id.EditTxt_CreatePage_course);
