@@ -1,5 +1,6 @@
 package com.example.group6_schoolkit.taskCrud;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class HomeTaskCrud extends AppCompatActivity {
     Button button, button2;
@@ -30,6 +32,7 @@ public class HomeTaskCrud extends AppCompatActivity {
     ListView listMy;
     private CalendarView calendarView;
     private Button btnSwitchView;
+    private DataBaseHelper myDB;
 
 
     @Override
@@ -42,7 +45,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         taskHomeTitle=findViewById(R.id.taskHomeTitle);
         firebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
-
+        myDB = new DataBaseHelper(HomeTaskCrud.this);
 
         CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(TaskUtil.getInstance().getAllTasks());
         listMy = findViewById(R.id.listViewHomeTaskCrud);
@@ -64,6 +67,16 @@ public class HomeTaskCrud extends AppCompatActivity {
             }
         });
 
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                ArrayList<TaskModel> tasks = myDB.getTasksForDate(year, month, dayOfMonth);
+                CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(tasks);
+                listMy.setAdapter(adapter);
+                listMy.setVisibility(View.VISIBLE);
+                calendarView.setVisibility(View.GONE);
+            }
+        });
         listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

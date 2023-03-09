@@ -16,7 +16,9 @@ import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity {
     private EditText title,desc, due, category, course,owner,comment;
@@ -32,7 +34,7 @@ public class AddTaskActivity extends AppCompatActivity {
         title=findViewById(R.id.EditTxt_CreatePage_title);
         desc = findViewById(R.id.EditTxt_CreatePage_description);
         due = findViewById(R.id.EditTxt_CreatePage_duedate);
-        due.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
+        due.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate.getTime()));
         due.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,12 +50,13 @@ public class AddTaskActivity extends AppCompatActivity {
                                 // update selectedDate with the new date
                                 selectedDate.set(year, monthOfYear, dayOfMonth);
 
-                                // update the EditText or TextView with the selected date
-                                due.setText(
-                                        DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
+                                // format the selected date using SimpleDateFormat
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                String formattedDate = sdf.format(selectedDate.getTime());
+
+                                // update the EditText or TextView with the formatted date
+                                due.setText(formattedDate);
                             }
-
-
                         },
                         year, month, day);
                 datePickerDialog.show();

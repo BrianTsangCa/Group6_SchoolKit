@@ -1,6 +1,7 @@
 package com.example.group6_schoolkit.taskCrud;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +19,9 @@ import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class EditTaskActivity extends AppCompatActivity {
     private EditText title,desc, due, category, course,owner,comment;
@@ -34,6 +38,8 @@ public class EditTaskActivity extends AppCompatActivity {
         desc = findViewById(R.id.EditTxt_EditPage_description);
         due = findViewById(R.id.EditTxt_EditPage_duedate);
         due.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
+
+        due = findViewById(R.id.EditTxt_EditPage_duedate);
         due.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,12 +55,13 @@ public class EditTaskActivity extends AppCompatActivity {
                                 // update selectedDate with the new date
                                 selectedDate.set(year, monthOfYear, dayOfMonth);
 
-                                // update the EditText or TextView with the selected date
-                                due.setText(
-                                        DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
+                                // format the selected date using SimpleDateFormat
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                String formattedDate = sdf.format(selectedDate.getTime());
+
+                                // update the EditText or TextView with the formatted date
+                                due.setText(formattedDate);
                             }
-
-
                         },
                         year, month, day);
                 datePickerDialog.show();
