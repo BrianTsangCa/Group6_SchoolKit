@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ public class HomeTaskCrud extends AppCompatActivity {
     FirebaseUser user;
 //    ArrayList<String> sampleList = new ArrayList<>(Arrays.asList("task1", "task2", "Task3"));
     ListView listMy;
+    private CalendarView calendarView;
+    private Button btnSwitchView;
 
 
     @Override
@@ -44,8 +47,22 @@ public class HomeTaskCrud extends AppCompatActivity {
         CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(TaskUtil.getInstance().getAllTasks());
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
+        calendarView = findViewById(R.id.calendarView);
+        calendarView.setVisibility(View.GONE);
+        btnSwitchView = findViewById(R.id.btnSwitchView);
 
-
+        btnSwitchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listMy.getVisibility() == View.VISIBLE) {
+                    listMy.setVisibility(View.GONE);
+                    calendarView.setVisibility(View.VISIBLE);
+                } else {
+                    listMy.setVisibility(View.VISIBLE);
+                    calendarView.setVisibility(View.GONE);
+                }
+            }
+        });
 
         listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
