@@ -11,12 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.taskCrud.HomeTaskCrud;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class activity_login extends AppCompatActivity {
     TextView editText_LoginPage_StudentId, editTextTextPassword2;
@@ -30,7 +38,36 @@ public class activity_login extends AppCompatActivity {
         editText_LoginPage_StudentId=findViewById(R.id.editText_LoginPage_StudentId);
         editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
         firebaseAuth=FirebaseAuth.getInstance();
-        
+
+        //Joke Api
+        TextView jokeTextView = findViewById(R.id.textViewJokeApi);
+        String jokeUrl = "https://v2.jokeapi.dev/joke/Programming";
+
+        //Joke Api
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(jokeUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String question = response.getString("joke").toString();
+                    //String delivery = response.getString("delivery").toString();
+
+                    jokeTextView.setText(question);
+                    //jokeTextView.setText(response.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                jokeTextView.setText("Error ");
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjectRequest);
+
 //        btn_LoginPage.setOnClickListener((View v)-> {
 //            String _email = editText_LoginPage_StudentId.getText().toString().trim();
 //            String _password = editTextTextPassword2.getText().toString().trim();
