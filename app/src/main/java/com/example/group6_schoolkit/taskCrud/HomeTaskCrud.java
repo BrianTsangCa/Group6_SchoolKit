@@ -56,12 +56,9 @@ public class HomeTaskCrud extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_task_crud);
-
         //API
         TextView testWeather = findViewById(R.id.textViewTestWeather);
-
         String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
-
         //Weather Api
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
             @Override
@@ -81,11 +78,9 @@ public class HomeTaskCrud extends AppCompatActivity {
                 testWeather.setText("Error");
             }
         });
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
         //requestQueue.add(jsonObjectRequest2);
-
         //end of API
 
 

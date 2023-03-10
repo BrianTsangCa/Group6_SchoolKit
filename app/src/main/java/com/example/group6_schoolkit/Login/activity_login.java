@@ -33,11 +33,6 @@ public class activity_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Button btn_LoginPage=findViewById(R.id.btn_LoginPage_Login);
-        Button btn_LoginPage_Register = findViewById(R.id.btn_LoginPage_Register);
-        editText_LoginPage_StudentId=findViewById(R.id.editText_LoginPage_StudentId);
-        editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
-        firebaseAuth=FirebaseAuth.getInstance();
 
         //Joke Api
         TextView jokeTextView = findViewById(R.id.textViewJokeApi);
@@ -67,6 +62,14 @@ public class activity_login extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
+
+        Button btn_LoginPage=findViewById(R.id.btn_LoginPage_Login);
+        Button btn_LoginPage_Register = findViewById(R.id.btn_LoginPage_Register);
+        editText_LoginPage_StudentId=findViewById(R.id.editText_LoginPage_StudentId);
+        editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
+        firebaseAuth=FirebaseAuth.getInstance();
+
+
 
 //        btn_LoginPage.setOnClickListener((View v)-> {
 //            String _email = editText_LoginPage_StudentId.getText().toString().trim();
