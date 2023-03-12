@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
+import com.example.group6_schoolkit.Utils.CourseModel;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.util.ArrayList;
@@ -26,8 +27,13 @@ public class AllTasksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_tasks);
 
         myDB = new DataBaseHelper(AllTasksActivity.this);
-        //for testing only. creating 1 instance of task
-        myDB.insertTask(new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1));
+
+        //for testing only. creating 1 instance of task and 1 instance of course model
+        TaskModel taskTest = new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1);
+        CourseModel courseTest = new CourseModel(12345, "INTRO TO MOBILE 1", "MOBILE1","INSTRUCTOR",taskTest.getId());
+
+        myDB.insertTask(taskTest);
+        myDB.insertCourse(courseTest, taskTest);
         //this is to check the id of the last item
         Toast.makeText(this, "last ID is " + myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId(), Toast.LENGTH_SHORT).show();
 
@@ -49,6 +55,7 @@ public class AllTasksActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 myDB.deleteAllTasks();
+                myDB.deleteTask(1);
                 adapter.setBooks(myDB.getAllTasks());
             }
         });

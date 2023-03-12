@@ -17,13 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.group6_schoolkit.Course.CourseActivity;
 import com.example.group6_schoolkit.R;
+import com.example.group6_schoolkit.Utils.CourseModel;
 
 import java.util.ArrayList;
 
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<TaskModel> tasks = new ArrayList<>();
+    private ArrayList<CourseModel> courses = new ArrayList<>();
 
     private Context mContext;
 
@@ -44,7 +47,8 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         holder.txtTitle.setText(tasks.get(position).getTitle());
 
         holder.txtAuthor.setText(tasks.get(position).getOwner());
-        holder.txtDescription.setText(tasks.get(position).getDescription());
+//        holder.txtDescription.setText(tasks.get(position).getDescription());
+        holder.txtDescription.setText(tasks.get(position).getCourse());
         holder.txtViewDate.setText(tasks.get(position).getDueDate());
         holder.btnImportance.setText(tasks.get(position).getImportance());
 
@@ -73,6 +77,21 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("COMMENT",tasks.get(position).getCommentBox());
                 intent.putExtra("DESCRIPTION",tasks.get(position).getDescription());
                 intent.putExtra("ID", tasks.get(position).getId());
+                mContext.startActivity(intent);
+            }
+        });
+        //when the course is clicked from all task activity, it will route to course activity with the course data
+        holder.txtDescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CourseActivity.class);
+                intent.putExtra("ID", courses.get(position).getId());
+
+                intent.putExtra("COURSENO", courses.get(position).getCourseNo());
+                intent.putExtra("COURSENAME", courses.get(position).getCourseName());
+                intent.putExtra("COURSEDESC", courses.get(position).getCourseDesc());
+                intent.putExtra("INSTRUCTOR", courses.get(position).getInstructor());
+                intent.putExtra("TASKID", courses.get(position).getTaskId());
                 mContext.startActivity(intent);
             }
         });

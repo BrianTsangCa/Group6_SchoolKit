@@ -26,7 +26,7 @@ public class TaskModel {
         this.owner = owner;
         this.commentBox = commentBox;
         this.status=status;
-        this.id=++lastId;
+//        this.id=++lastId;
         isExpanded=false;
     }
 
