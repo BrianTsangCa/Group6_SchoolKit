@@ -61,6 +61,7 @@ public class CourseActivity extends AppCompatActivity {
                 int courseNo = Integer.parseInt(textView2.getText().toString());
                 myDB.updateCourse(courseId, new CourseModel(courseNo,textView8.getText().toString(), textView9.getText().toString(), textView10.getText().toString(),taskId ));
                 myDB.updateTask2(taskId,textView8.getText().toString() );
+                startActivity(new Intent(CourseActivity.this, AllTasksActivity.class));
             }
         });
 
