@@ -77,6 +77,22 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("COMMENT",tasks.get(position).getCommentBox());
                 intent.putExtra("DESCRIPTION",tasks.get(position).getDescription());
                 intent.putExtra("ID", tasks.get(position).getId());
+                //this will get the course information for the task
+                for(int i=0;i<courses.size();i++){
+                    if(courses.get(i).getCourseName().equals(tasks.get(position).getCourse())){
+                        intent.putExtra("COURSENAME", courses.get(i).getCourseName());
+                        intent.putExtra("COURSEID", courses.get(i).getId());
+                        intent.putExtra("COURSENO", courses.get(i).getCourseNo());
+                        intent.putExtra("COURSEDESC", courses.get(i).getCourseDesc());
+                        intent.putExtra("INSTRUCTOR", courses.get(i).getInstructor());
+                        intent.putExtra("TASKID", courses.get(i).getTaskId());
+                        mContext.startActivity(intent);
+                        break;
+                    }else{
+
+                    }
+
+                }
                 mContext.startActivity(intent);
             }
         });

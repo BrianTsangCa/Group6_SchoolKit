@@ -122,7 +122,8 @@ public class EditTaskActivity extends AppCompatActivity {
                 }
                 TaskModel updateTask = new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1);
                 myDB.updateTask(intent.getExtras().getInt("ID"),updateTask);
-
+                CourseModel courseTest = new CourseModel(intent.getExtras().getInt("COURSENO"), course.getText().toString(),intent.getExtras().getString("COURSEDESC") ,intent.getExtras().getString("INSTRUCTOR"), intent.getExtras().getInt("ID"));
+                myDB.updateCourse(intent.getExtras().getInt("COURSEID"), courseTest);
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });

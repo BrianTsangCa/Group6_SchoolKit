@@ -120,7 +120,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_COURSE_3, course.getCourseName());
         values.put(COL_COURSE_4, course.getCourseDesc());
         values.put(COL_COURSE_5, course.getInstructor());
-//        values.put(COL_COURSE_6, course.getTaskId());
+        values.put(COL_COURSE_6, course.getTaskId());
         db.update(TABLE_NAME_COURSE , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
