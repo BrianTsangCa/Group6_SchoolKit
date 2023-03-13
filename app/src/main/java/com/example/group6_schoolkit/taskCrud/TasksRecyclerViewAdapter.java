@@ -85,14 +85,27 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CourseActivity.class);
-                intent.putExtra("ID", courses.get(position).getId());
 
-                intent.putExtra("COURSENO", courses.get(position).getCourseNo());
-                intent.putExtra("COURSENAME", courses.get(position).getCourseName());
-                intent.putExtra("COURSEDESC", courses.get(position).getCourseDesc());
-                intent.putExtra("INSTRUCTOR", courses.get(position).getInstructor());
-                intent.putExtra("TASKID", courses.get(position).getTaskId());
-                mContext.startActivity(intent);
+                for(int i=0;i<courses.size();i++){
+                    if(courses.get(i).getCourseName().equals(tasks.get(position).getCourse())){
+                        intent.putExtra("COURSENAME", courses.get(i).getCourseName());
+                        intent.putExtra("ID", courses.get(i).getId());
+                        intent.putExtra("COURSENO", courses.get(i).getCourseNo());
+                        intent.putExtra("COURSEDESC", courses.get(i).getCourseDesc());
+                        intent.putExtra("INSTRUCTOR", courses.get(i).getInstructor());
+                        intent.putExtra("TASKID", courses.get(i).getTaskId());
+                        mContext.startActivity(intent);
+                        break;
+                    }else{
+
+                    }
+
+                }
+                Toast.makeText(mContext, courses.size()+" is the size of course array", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "NOT FOUND "+tasks.get(position).getId(), Toast.LENGTH_SHORT).show();
+
+//
+
             }
         });
 
@@ -111,8 +124,9 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         return tasks.size();
     }
 
-    public void setBooks(ArrayList<TaskModel> tasks) {
+    public void setBooks(ArrayList<TaskModel> tasks, ArrayList<CourseModel> courses) {
         this.tasks = tasks;
+        this.courses=courses;
         notifyDataSetChanged();
     }
 

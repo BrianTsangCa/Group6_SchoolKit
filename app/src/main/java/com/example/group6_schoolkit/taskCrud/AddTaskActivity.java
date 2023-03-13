@@ -13,12 +13,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
+import com.example.group6_schoolkit.Utils.CourseModel;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import kotlinx.coroutines.scheduling.Task;
 
 public class AddTaskActivity extends AppCompatActivity {
     private EditText title,desc, due, category, course,owner,comment;
@@ -94,7 +97,10 @@ public class AddTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
+                TaskModel newTask = new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1);
+                myDB.insertTask(newTask);
+                CourseModel courseTest = new CourseModel(12345, newTask.getCourse(), "MOBILE1","INSTRUCTOR", myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId());
+                myDB.insertCourse(courseTest);
                 startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
             }
         });

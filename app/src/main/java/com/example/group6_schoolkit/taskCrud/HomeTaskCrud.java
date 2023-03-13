@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.group6_schoolkit.Course.CourseActivity;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +42,7 @@ import java.util.List;
 
 public class HomeTaskCrud extends AppCompatActivity {
     Button button, button2;
-    TextView taskHomeTitle;
+    TextView taskHomeTitle, textViewCreateC;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
 //    ArrayList<String> sampleList = new ArrayList<>(Arrays.asList("task1", "task2", "Task3"));
@@ -58,6 +59,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         setContentView(R.layout.activity_home_task_crud);
         //API
         TextView testWeather = findViewById(R.id.textViewTestWeather);
+        textViewCreateC=findViewById(R.id.textViewCreateC);
         String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
@@ -146,6 +148,13 @@ public class HomeTaskCrud extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeTaskCrud.this, AddTaskActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        textViewCreateC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HomeTaskCrud.this, CourseActivity.class));
             }
         });
     }

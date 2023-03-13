@@ -28,12 +28,20 @@ public class AllTasksActivity extends AppCompatActivity {
 
         myDB = new DataBaseHelper(AllTasksActivity.this);
 
-        //for testing only. creating 1 instance of task and 1 instance of course model
-        TaskModel taskTest = new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1);
-        CourseModel courseTest = new CourseModel(12345, "INTRO TO MOBILE 1", "MOBILE1","INSTRUCTOR",taskTest.getId());
+        if(myDB.getAllTasks().isEmpty()){
+            //for testing only. creating 1 instance of task and 1 instance of course model
+            TaskModel taskTest = new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1);
+            myDB.insertTask(taskTest);
+            CourseModel courseTest = new CourseModel(12345, taskTest.getCourse(), "MOBILE1","INSTRUCTOR", myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId());
+            myDB.insertCourse(courseTest);
+        }else{
 
-        myDB.insertTask(taskTest);
-        myDB.insertCourse(courseTest, taskTest);
+        }
+
+
+
+        //createing test course model and getting some attr from the previously created task model
+
         //this is to check the id of the last item
         Toast.makeText(this, "last ID is " + myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId(), Toast.LENGTH_SHORT).show();
 
@@ -47,7 +55,7 @@ public class AllTasksActivity extends AppCompatActivity {
 //        ArrayList<TaskModel> taskList = new ArrayList<>();
 
 //        adapter.setBooks(TaskUtil.getAllTasks());
-        adapter.setBooks(myDB.getAllTasks());
+        adapter.setBooks(myDB.getAllTasks(), myDB.getAllCourse());
 
 
         //this is for the delete all task option
@@ -56,7 +64,8 @@ public class AllTasksActivity extends AppCompatActivity {
             public void onClick(View view) {
                 myDB.deleteAllTasks();
                 myDB.deleteTask(1);
-                adapter.setBooks(myDB.getAllTasks());
+                myDB.deleteAllCourse();
+                adapter.setBooks(myDB.getAllTasks(), myDB.getAllCourse());
             }
         });
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.group6_schoolkit.R;
+import com.example.group6_schoolkit.Utils.CourseModel;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.text.DateFormat;
@@ -119,7 +120,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
+                TaskModel updateTask = new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1);
+                myDB.updateTask(intent.getExtras().getInt("ID"),updateTask);
+
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });

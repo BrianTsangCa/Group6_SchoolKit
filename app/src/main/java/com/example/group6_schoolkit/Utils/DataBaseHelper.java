@@ -52,7 +52,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, DESCRIPTION TEXT, DUEDATE TEXT, IMPORTANCE TEXT, CATEGORY TEXT, COURSE TEXT, OWNER TEXT, COMMENT TEXT, STATUS INTEGER)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_COURSE + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, COURSENO INTEGER, COURSENAME TEXT, COURSEDESC TEXT, INSTRUCTOR TEXT, TASKID INTEGET)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME_COURSE + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, COURSENO INTEGER, COURSENAME TEXT, COURSEDESC TEXT, INSTRUCTOR TEXT, TASKID INTEGER)");
     }
 
     @Override
@@ -78,15 +78,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertCourse(CourseModel course, TaskModel task){
+    public void insertCourse(CourseModel course){
         db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(COL_COURSE_2, course.getCourseNo());
 //        values.put(COL_COURSE_3, course.getCourseName());
-        values.put(COL_COURSE_3, task.getCourse());
+        values.put(COL_COURSE_3, course.getCourseName());
         values.put(COL_COURSE_4, course.getCourseDesc());
         values.put(COL_COURSE_5, course.getInstructor());
-        values.put(COL_COURSE_6, task.getId());
+        values.put(COL_COURSE_6, course.getTaskId());
         db.insert(TABLE_NAME_COURSE, null, values);
 
     }
@@ -106,14 +106,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
-    public void updateCourse(int id, CourseModel course, TaskModel task){
+    public void updateTask2(int id, String courseName){
+        db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(COL_7, courseName);
+        db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
+    }
+
+    public void updateCourse(int id, CourseModel course){
         db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(COL_COURSE_2, course.getCourseNo());
         values.put(COL_COURSE_3, course.getCourseName());
         values.put(COL_COURSE_4, course.getCourseDesc());
         values.put(COL_COURSE_5, course.getInstructor());
-        values.put(COL_COURSE_6, task.getId());
+//        values.put(COL_COURSE_6, course.getTaskId());
         db.update(TABLE_NAME_COURSE , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
