@@ -102,7 +102,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
 
                 }
                 Toast.makeText(mContext, courses.size()+" is the size of course array", Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext, "NOT FOUND "+tasks.get(position).getId(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "NOT FOUND "+tasks.get(position).getId(), Toast.LENGTH_SHORT).show();
 
 //
 
