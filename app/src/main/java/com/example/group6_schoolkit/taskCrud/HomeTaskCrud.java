@@ -56,6 +56,7 @@ public class HomeTaskCrud extends AppCompatActivity {
     private Button btnSwitchView;
     private DataBaseHelper myDB;
 
+
     private DatabaseReference mDatabase;
     String nameDisplay;
 
@@ -143,25 +144,26 @@ public class HomeTaskCrud extends AppCompatActivity {
         });
 
         //dire to edit task
-        listMy.setOnItemClickListener((parent, view, position, id) -> {
-            Toast.makeText(this, "Task is clicked", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
-            intent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
-            intent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
-            intent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
-            intent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
-            intent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
-            intent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
-            intent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
-            //intent.putExtra("OWNER",tasks.get(position).getOwner());
-            intent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
-            intent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
-            intent.putExtra("ID", adapter.nameLists.get(position).getId());
-           // intent.startActivity(intent);
-            startActivity(intent);
-            adapter.notifyDataSetChanged();
-
-
+        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
+                intent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
+                intent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
+                intent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
+                intent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
+                intent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
+                intent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
+                intent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
+                //intent.putExtra("OWNER",tasks.get(position).getOwner());
+                intent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
+                intent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
+                intent.putExtra("ID", adapter.nameLists.get(position).getId());
+                // intent.startActivity(intent);
+                startActivity(intent);
+                adapter.notifyDataSetChanged();
+            }
         });
 
 //        if(user.getUid()== FirebaseDatabase.getInstance().g)
