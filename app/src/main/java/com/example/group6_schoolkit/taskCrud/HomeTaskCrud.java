@@ -60,13 +60,21 @@ public class HomeTaskCrud extends AppCompatActivity {
         TextView testWeather = findViewById(R.id.textViewTestWeather);
         String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequestWeather = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String weather = response.getString("main").toString();
-                    testWeather.setText( response.toString());
-                    Log.d("weather:", response.toString());
+                    JSONObject mainObject = response.getJSONObject("main");
+                    String temp = mainObject.getString("temp");
+                    Log.d("temp",temp);
+
+
+                    // String temp = mainObject.getString("temp");
+
+                    //String weather = temp.toString();
+
+                    testWeather.setText(temp);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -79,7 +87,7 @@ public class HomeTaskCrud extends AppCompatActivity {
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequestWeather);
         //requestQueue.add(jsonObjectRequest2);
         //end of API
 
@@ -121,12 +129,27 @@ public class HomeTaskCrud extends AppCompatActivity {
                 calendarView.setVisibility(View.GONE);
             }
         });
-        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(HomeTaskCrud.this, AllTasksActivity.class);
-                startActivity(myIntent);
-            }
+
+        //dire to edit task
+        listMy.setOnItemClickListener((parent, view, position, id) -> {
+            Toast.makeText(this, "Task is clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
+            intent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
+            intent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
+            intent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
+            intent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
+            intent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
+            intent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
+            intent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
+            //intent.putExtra("OWNER",tasks.get(position).getOwner());
+            intent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
+            intent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
+            intent.putExtra("ID", adapter.nameLists.get(position).getId());
+           // intent.startActivity(intent);
+            startActivity(intent);
+            adapter.notifyDataSetChanged();
+
+
         });
 
         taskHomeTitle.setText("WELCOME "+"\n"+user.getDisplayName());

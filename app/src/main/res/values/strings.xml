@@ -10,6 +10,7 @@
     <string name="txtTaskTitle">Task\'s title</string>
     <string name="textViewAllTasks">All Task...</string>
     <string name="SwitchView">Switch View</string>
+    <string name="emptyText" />
     <string-array name="importance">
         <item>Low</item>
         <item>Medium</item>

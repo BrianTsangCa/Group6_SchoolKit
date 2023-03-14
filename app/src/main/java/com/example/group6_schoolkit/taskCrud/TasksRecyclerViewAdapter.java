@@ -119,10 +119,6 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             txtDescription = itemView.findViewById(R.id.textViewDescription);
             btnImportance = itemView.findViewById(R.id.buttonImportance);
 
-
-
-
-
         }
     }
 }
