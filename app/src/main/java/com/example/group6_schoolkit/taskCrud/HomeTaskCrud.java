@@ -14,6 +14,7 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -23,8 +24,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +55,9 @@ public class HomeTaskCrud extends AppCompatActivity {
     private CalendarView calendarView;
     private Button btnSwitchView;
     private DataBaseHelper myDB;
+
+    private DatabaseReference mDatabase;
+    String nameDisplay;
 
     //Weather API
 
@@ -91,6 +100,9 @@ public class HomeTaskCrud extends AppCompatActivity {
         //requestQueue.add(jsonObjectRequest2);
         //end of API
 
+
+//        String nameDisplay= FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().getResult().child("name").getValue().toString();
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child()
 
         button = findViewById(R.id.btnSeeAllTasks);
         button2 = findViewById(R.id.btnAddTask);
@@ -152,7 +164,9 @@ public class HomeTaskCrud extends AppCompatActivity {
 
         });
 
-        taskHomeTitle.setText("WELCOME "+"\n"+user.getDisplayName());
+//        if(user.getUid()== FirebaseDatabase.getInstance().g)
+
+
 
 
 
@@ -169,6 +183,31 @@ public class HomeTaskCrud extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeTaskCrud.this, AddTaskActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mDatabase= FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        DataSnapshot dataSnapshot =task.getResult();
+                        nameDisplay = String.valueOf(dataSnapshot.child("name").getValue());
+                        String roleDisplay = String.valueOf(dataSnapshot.child("role").getValue());
+                        taskHomeTitle.setText("WELCOME "+"\n"+nameDisplay
+                        +"\n"+ roleDisplay);
+
+                        Toast.makeText(HomeTaskCrud.this, "Name is "+nameDisplay, Toast.LENGTH_SHORT).show();
+                    }else{
+//                        System.out.println(task.getException().toString()+ " Innser Error");
+                        Toast.makeText(HomeTaskCrud.this, "Inner error", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+//                    System.out.println(task.getException().toString()+" Outer Error");
+                    Toast.makeText(HomeTaskCrud.this, "Outer error", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

@@ -72,4 +72,17 @@
         app:layout_constraintStart_toEndOf="@+id/buttonRegister"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
+    <Spinner
+        android:id="@+id/spinnerRole"
+        android:layout_width="212dp"
+        android:layout_height="51dp"
+        android:entries="@array/role"
+        android:prompt="@string/prmp"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintVertical_bias="0.112" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
