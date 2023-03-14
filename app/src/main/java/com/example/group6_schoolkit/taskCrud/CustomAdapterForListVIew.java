@@ -44,7 +44,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
             view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.taskitemviewforlistview, viewGroup, false);
         }
         //set text view
-        TextView txtviewHomeTitle=view.findViewById(R.id.textViewHomeTitle);
+        TextView txtviewHomeTitle = view.findViewById(R.id.textViewHomeTitle);
         TextView txtViewHomeDate = view.findViewById(R.id.textViewHomeDate);
         TextView txtViewHomeDes = view.findViewById(R.id.textViewHomeDes);
         Button btnHomeImportance = view.findViewById(R.id.buttonHomeImportance);

@@ -6,7 +6,9 @@
     android:layout_height="100dp"
     android:layout_marginBottom="10sp"
     android:baselineAligned="false"
-    android:orientation="horizontal">
+    android:clickable="true"
+    android:orientation="horizontal"
+    tools:ignore="DuplicateClickableBoundsCheck">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

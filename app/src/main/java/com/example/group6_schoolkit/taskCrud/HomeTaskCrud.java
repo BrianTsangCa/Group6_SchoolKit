@@ -70,34 +70,32 @@ public class HomeTaskCrud extends AppCompatActivity {
         TextView testWeather = findViewById(R.id.textViewTestWeather);
         String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
-        JsonObjectRequest jsonObjectRequestWeather = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
+       // String jokeUrl = "https://v2.jokeapi.dev/joke/Programming";
+
+        //Joke Api
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONObject mainObject = response.getJSONObject("main");
-                    String temp = mainObject.getString("temp");
-                    Log.d("temp",temp);
+                    JSONObject jsonDate = response.getJSONObject("main");
+                    String delivery = jsonDate.getString("temp").toString();
 
-
-                    // String temp = mainObject.getString("temp");
-
-                    //String weather = temp.toString();
-
-                    testWeather.setText(temp);
+                    testWeather.setText(delivery);
+                    //jokeTextView.setText(response.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                testWeather.setText("Error");
+                testWeather.setText("Error ");
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonObjectRequestWeather);
+        requestQueue.add(jsonObjectRequest);
+
         //requestQueue.add(jsonObjectRequest2);
         //end of API
 
@@ -112,7 +110,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
 
-        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(TaskUtil.getInstance().getAllTasks());
+        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getAllTasks());
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
         calendarView = findViewById(R.id.calendarView);
@@ -147,22 +145,22 @@ public class HomeTaskCrud extends AppCompatActivity {
         listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
-                intent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
-                intent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
-                intent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
-                intent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
-                intent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
-                intent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
-                intent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
-                //intent.putExtra("OWNER",tasks.get(position).getOwner());
-                intent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
-                intent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
-                intent.putExtra("ID", adapter.nameLists.get(position).getId());
-                // intent.startActivity(intent);
-                startActivity(intent);
                 adapter.notifyDataSetChanged();
+                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
+                myIntent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
+                myIntent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
+                myIntent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
+                myIntent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
+                myIntent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
+                myIntent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
+                //intent.putExtra("OWNER",tasks.get(position).getOwner());
+                myIntent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
+                myIntent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("ID", adapter.nameLists.get(position).getId());
+                // intent.startActivity(myIntent);
+                startActivity(myIntent);
             }
         });
 
