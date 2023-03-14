@@ -56,6 +56,7 @@ public class HomeTaskCrud extends AppCompatActivity {
     private Button btnSwitchView;
     private DataBaseHelper myDB;
 
+
     private DatabaseReference mDatabase;
     String nameDisplay;
 
@@ -69,26 +70,32 @@ public class HomeTaskCrud extends AppCompatActivity {
         TextView testWeather = findViewById(R.id.textViewTestWeather);
         String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
+       // String jokeUrl = "https://v2.jokeapi.dev/joke/Programming";
+
+        //Joke Api
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String weather = response.getString("main").toString();
-                    testWeather.setText( response.toString());
-                    Log.d("weather:", response.toString());
+                    JSONObject jsonDate = response.getJSONObject("main");
+                    String delivery = jsonDate.getString("temp").toString();
+
+                    testWeather.setText(delivery);
+                    //jokeTextView.setText(response.toString());
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                testWeather.setText("Error");
+                testWeather.setText("Error ");
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonObjectRequest);
+
         //requestQueue.add(jsonObjectRequest2);
         //end of API
 
@@ -103,7 +110,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
 
-        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(TaskUtil.getInstance().getAllTasks());
+        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getAllTasks());
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
         calendarView = findViewById(R.id.calendarView);
@@ -133,10 +140,26 @@ public class HomeTaskCrud extends AppCompatActivity {
                 calendarView.setVisibility(View.GONE);
             }
         });
+
+        //dire to edit task
         listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(HomeTaskCrud.this, AllTasksActivity.class);
+                adapter.notifyDataSetChanged();
+                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
+                myIntent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
+                myIntent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
+                myIntent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
+                myIntent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
+                myIntent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
+                myIntent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
+                //intent.putExtra("OWNER",tasks.get(position).getOwner());
+                myIntent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
+                myIntent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("ID", adapter.nameLists.get(position).getId());
+                // intent.startActivity(myIntent);
                 startActivity(myIntent);
             }
         });

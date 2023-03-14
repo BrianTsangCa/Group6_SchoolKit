@@ -53,6 +53,8 @@ public class AllTasksActivity extends AppCompatActivity {
             }
         });
 
+
+
         //testing update function
 //        myDB.updateTask(21, new TaskModel("title1111_UPDATED","desc1", "dueDate1", "imp", "category", "course", "owner", "comment", 1));
 //        adapter.setBooks(myDB.getAllTasks());
