@@ -29,8 +29,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +58,7 @@ public class HomeTaskCrud extends AppCompatActivity {
     private Button btnSwitchView;
     private DataBaseHelper myDB;
 
-
+    ArrayList<String> usersList = new ArrayList<>();
     private DatabaseReference mDatabase;
     String nameDisplay;
 
@@ -182,10 +184,13 @@ public class HomeTaskCrud extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeTaskCrud.this, AddTaskActivity.class);
+                //this is to get the list of users
+                intent.putExtra("USERS", usersList);
                 startActivity(intent);
             }
         });
 
+        //this is to get the user information and the role, to display
         mDatabase= FirebaseDatabase.getInstance().getReference("Users");
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -207,6 +212,24 @@ public class HomeTaskCrud extends AppCompatActivity {
 //                    System.out.println(task.getException().toString()+" Outer Error");
                     Toast.makeText(HomeTaskCrud.this, "Outer error", Toast.LENGTH_SHORT).show();
                 }
+
+            }
+        });
+
+        //this is to get all regstered users
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> userList = snapshot.getChildren();
+                for (DataSnapshot x:userList
+                     ) {
+                    System.out.println(x.child("name").getValue().toString());
+                    usersList.add(x.child("name").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

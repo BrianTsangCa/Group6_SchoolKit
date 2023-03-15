@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.example.group6_schoolkit.Utils.DataBaseHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -26,6 +29,12 @@ public class AddTaskActivity extends AppCompatActivity {
     private Spinner spinner_CreatePage_importance;
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
+
+    Spinner spinnerUsers;
+
+    Intent intent;
+    ArrayList<String> users = new ArrayList<>();
+    String ownerFromList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +78,28 @@ public class AddTaskActivity extends AppCompatActivity {
         comment=findViewById(R.id.EditTxt_CreatePage_comment);
         btn_createTask=findViewById(R.id.btn_CreateTask);
 
+        spinnerUsers=findViewById(R.id.spinnerUsers);
+
+        //this is to get the user array from HomeTaskCrud
+        intent=getIntent();
+        users=intent.getExtras().getStringArrayList("USERS");
+        //this is to set the spinner with the user array values
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, users);
+        spinnerUsers.setAdapter(dataAdapter);
+        spinnerUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ownerFromList=spinnerUsers.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+
         btn_createTask.setOnClickListener((View view)-> {
             if(title.getText().toString().length()==0){
                 Toast.makeText(AddTaskActivity.this,"Please enter title",Toast.LENGTH_SHORT).show();
@@ -94,7 +125,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
+                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1));
                 startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
             }
         });
@@ -102,6 +133,8 @@ public class AddTaskActivity extends AppCompatActivity {
         btn_Cancel.setOnClickListener((View v)-> {
             startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
         });
+
+
 
     }
 }

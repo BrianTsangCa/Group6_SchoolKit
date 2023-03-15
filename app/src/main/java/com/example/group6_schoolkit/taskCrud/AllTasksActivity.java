@@ -27,9 +27,9 @@ public class AllTasksActivity extends AppCompatActivity {
 
         myDB = new DataBaseHelper(AllTasksActivity.this);
         //for testing only. creating 1 instance of task
-        myDB.insertTask(new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1));
+//        myDB.insertTask(new TaskModel("title1111","desc1", "dueDate1", "Medium", "category", "course", "owner", "comment", 1));
         //this is to check the id of the last item
-        Toast.makeText(this, "last ID is " + myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "last ID is " + myDB.getAllTasks().get(myDB.getAllTasks().size()-1).getId(), Toast.LENGTH_SHORT).show();
 
 
         deleteAll=findViewById(R.id.deleteAll);
