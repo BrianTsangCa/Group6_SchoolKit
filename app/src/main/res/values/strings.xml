@@ -11,6 +11,7 @@
     <string name="textViewAllTasks">All Task...</string>
     <string name="SwitchView">Switch View</string>
     <string name="prmp">Select Role</string>
+    <string name="prompt">Select User</string>
     <string-array name="importance">
         <item>Low</item>
         <item>Medium</item>
