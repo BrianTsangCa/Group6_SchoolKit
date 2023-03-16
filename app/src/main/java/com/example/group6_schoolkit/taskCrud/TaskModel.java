@@ -15,8 +15,9 @@ public class TaskModel {
     private int status;
 
     private Boolean isExpanded;
+    private String email;
 
-    public TaskModel(String title, String description, String dueDate, String importance, String category, String course, String owner, String commentBox, int status) {
+    public TaskModel(String title, String description, String dueDate, String importance, String category, String course, String owner, String commentBox, int status, String email) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -28,6 +29,7 @@ public class TaskModel {
         this.status=status;
         this.id=++lastId;
         isExpanded=false;
+        this.email=email;
     }
 
     public TaskModel(){
@@ -122,5 +124,13 @@ public class TaskModel {
 
     public void setExpanded(Boolean expanded) {
         isExpanded = expanded;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

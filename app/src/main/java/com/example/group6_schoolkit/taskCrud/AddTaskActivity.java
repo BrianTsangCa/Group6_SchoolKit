@@ -16,11 +16,13 @@ import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.google.firebase.database.DatabaseReference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -34,7 +36,9 @@ public class AddTaskActivity extends AppCompatActivity {
 
     Intent intent;
     ArrayList<String> users = new ArrayList<>();
-    String ownerFromList;
+    HashMap<String, String> userEmailList = new HashMap<>();
+    String ownerFromList, userName, email, role;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,9 @@ public class AddTaskActivity extends AppCompatActivity {
         //this is to get the user array from HomeTaskCrud
         intent=getIntent();
         users=intent.getExtras().getStringArrayList("USERS");
+        email=intent.getExtras().getString("EMAIL");
+        userEmailList = (HashMap<String, String>) getIntent().getSerializableExtra("USEREMAILLIST");
+        Toast.makeText(this, "email is "+email, Toast.LENGTH_SHORT).show();
         //this is to set the spinner with the user array values
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, users);
         spinnerUsers.setAdapter(dataAdapter);
@@ -125,7 +132,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1));
+                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1, userEmailList.get(ownerFromList)));
                 startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
             }
         });

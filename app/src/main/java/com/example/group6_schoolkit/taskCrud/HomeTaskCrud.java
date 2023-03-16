@@ -51,6 +51,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeTaskCrud extends AppCompatActivity {
@@ -65,8 +66,9 @@ public class HomeTaskCrud extends AppCompatActivity {
     private DataBaseHelper myDB;
 
     ArrayList<String> usersList = new ArrayList<>();
+    HashMap<String, String> userEmailList = new HashMap<>();
     private DatabaseReference mDatabase;
-    String nameDisplay;
+    String nameDisplay,roleDisplay, email;
 
     //Weather API
 
@@ -201,6 +203,7 @@ public class HomeTaskCrud extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeTaskCrud.this, AllTasksActivity.class);
+                intent.putExtra("EMAIL", email);
                 startActivity(intent);
             }
         });
@@ -211,6 +214,9 @@ public class HomeTaskCrud extends AppCompatActivity {
                 Intent intent = new Intent(HomeTaskCrud.this, AddTaskActivity.class);
                 //this is to get the list of users
                 intent.putExtra("USERS", usersList);
+                intent.putExtra("EMAIL", email);
+                intent.putExtra("USEREMAILLIST", userEmailList);
+
                 startActivity(intent);
             }
         });
@@ -224,10 +230,11 @@ public class HomeTaskCrud extends AppCompatActivity {
                     if(task.getResult().exists()){
                         DataSnapshot dataSnapshot =task.getResult();
                         nameDisplay = String.valueOf(dataSnapshot.child("name").getValue());
-                        String roleDisplay = String.valueOf(dataSnapshot.child("role").getValue());
+                        roleDisplay = String.valueOf(dataSnapshot.child("role").getValue());
+                        email = String.valueOf(dataSnapshot.child("email").getValue());
                         taskHomeTitle.setText("WELCOME "+"\n"+nameDisplay
                         +"\n"+ roleDisplay);
-
+                        Toast.makeText(HomeTaskCrud.this, "email is "+email, Toast.LENGTH_SHORT).show();
                         Toast.makeText(HomeTaskCrud.this, "Name is "+nameDisplay, Toast.LENGTH_SHORT).show();
                     }else{
 //                        System.out.println(task.getException().toString()+ " Innser Error");
@@ -250,6 +257,7 @@ public class HomeTaskCrud extends AppCompatActivity {
                      ) {
                     System.out.println(x.child("name").getValue().toString());
                     usersList.add(x.child("name").getValue().toString());
+                    userEmailList.put(x.child("name").getValue().toString(), x.child("email").getValue().toString());
                 }
             }
 
@@ -258,5 +266,6 @@ public class HomeTaskCrud extends AppCompatActivity {
 
             }
         });
+
     }
 }

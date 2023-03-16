@@ -44,7 +44,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         holder.txtTitle.setText(tasks.get(position).getTitle());
 
         holder.txtAuthor.setText(tasks.get(position).getOwner());
-        holder.txtDescription.setText(tasks.get(position).getDescription());
+        holder.txtDescription.setText(tasks.get(position).getDescription()+"\n"+tasks.get(position).getEmail());
         holder.txtViewDate.setText(tasks.get(position).getDueDate());
         holder.btnImportance.setText(tasks.get(position).getImportance());
 

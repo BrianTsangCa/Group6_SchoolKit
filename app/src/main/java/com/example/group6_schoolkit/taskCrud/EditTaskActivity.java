@@ -29,10 +29,16 @@ public class EditTaskActivity extends AppCompatActivity {
     private Spinner spinner_EditPage_importance;
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
+    private String email;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        //this is to get the user email HomeTaskCrud
+        intent=getIntent();
+        email=intent.getExtras().getString("EMAIL");
 
         title=findViewById(R.id.EditTxt_EditPage_title);
         desc = findViewById(R.id.EditTxt_EditPage_description);
@@ -119,7 +125,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1));
+                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1, email));
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });
