@@ -29,7 +29,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return nameLists.get(i);
     }
 
     @Override
@@ -63,6 +63,8 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         }
         //drawable?
         //put into inttent
+
+
 
         return view;
     }

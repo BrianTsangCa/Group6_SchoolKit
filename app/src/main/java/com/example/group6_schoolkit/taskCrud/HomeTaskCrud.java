@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,7 +76,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         setContentView(R.layout.activity_home_task_crud);
         //API
         TextView testWeather = findViewById(R.id.textViewTestWeather);
-        String weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
+        String weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
        // String jokeUrl = "https://v2.jokeapi.dev/joke/Programming";
 
@@ -79,11 +85,32 @@ public class HomeTaskCrud extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONObject jsonDate = response.getJSONObject("main");
-                    String delivery = jsonDate.getString("temp").toString();
+                    if(response != null){
+                        JSONObject mainObj = response.getJSONObject("main");
 
-                    testWeather.setText(delivery);
-                    //jokeTextView.setText(response.toString());
+                        //icon
+
+                        JSONArray weatherArray = response.getJSONArray("weather");
+                        JSONObject weatherObj = weatherArray.getJSONObject(0);
+                        String weatherIconCode = weatherObj.getString("icon");
+                        ImageView imgweatherIcon = findViewById(R.id.imageViewHomeWeatherIcon);
+                        String iconURL = "https://openweathermap.org/img/wn/" +weatherIconCode +"@2x.png";
+                        Glide.with(HomeTaskCrud.this).load(iconURL).into(imgweatherIcon);
+
+
+                        //temperature
+                        double temp = mainObj.getDouble("temp");
+                        double celsius = temp-273.15;
+                        double feelsLike = mainObj.getDouble("feels_like");
+                        double tempMin = mainObj.getDouble("temp_min");
+                        double tempMax = mainObj.getDouble("temp_max");
+                        int pressure = mainObj.getInt("pressure");
+                        int humidity = mainObj.getInt("humidity");
+                        testWeather.setText(String.format("%.2f\u2103",celsius));
+
+
+
+                        }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -92,7 +119,8 @@ public class HomeTaskCrud extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                testWeather.setText("Error ");
+                testWeather.setText(String.valueOf(error));
+
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -118,6 +146,26 @@ public class HomeTaskCrud extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         calendarView.setVisibility(View.GONE);
         btnSwitchView = findViewById(R.id.btnSwitchView);
+        //dire to edit task
+        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                adapter.notifyDataSetChanged();
+                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
+                myIntent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
+                myIntent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
+                myIntent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
+                myIntent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
+                myIntent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
+                myIntent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
+                myIntent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
+                myIntent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
+                myIntent.putExtra("ID", adapter.nameLists.get(position).getId());
+                startActivity(myIntent);
+            }
+        });
 
         btnSwitchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,29 +188,6 @@ public class HomeTaskCrud extends AppCompatActivity {
                 listMy.setAdapter(adapter);
                 listMy.setVisibility(View.VISIBLE);
                 calendarView.setVisibility(View.GONE);
-            }
-        });
-
-        //dire to edit task
-        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.notifyDataSetChanged();
-                Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
-                myIntent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
-                myIntent.putExtra("DESC", adapter.nameLists.get(position).getDescription());
-                myIntent.putExtra("OWNER", adapter.nameLists.get(position).getOwner());
-                myIntent.putExtra("DATE",adapter.nameLists.get(position).getDueDate());
-                myIntent.putExtra("IMPORTANCE",adapter.nameLists.get(position).getImportance());
-                myIntent.putExtra("CATEGORY",adapter.nameLists.get(position).getCategory());
-                myIntent.putExtra("COURSE",adapter.nameLists.get(position).getCourse());
-                //intent.putExtra("OWNER",tasks.get(position).getOwner());
-                myIntent.putExtra("COMMENT",adapter.nameLists.get(position).getCommentBox());
-                myIntent.putExtra("DESCRIPTION",adapter.nameLists.get(position).getDescription());
-                myIntent.putExtra("ID", adapter.nameLists.get(position).getId());
-                // intent.startActivity(myIntent);
-                startActivity(myIntent);
             }
         });
 

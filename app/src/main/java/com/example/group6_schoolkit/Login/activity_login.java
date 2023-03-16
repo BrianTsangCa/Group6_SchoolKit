@@ -44,12 +44,13 @@ public class activity_login extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String question = response.getString("joke").toString();
-                    //String delivery = response.getString("delivery").toString();
+                    if(response != null) {
+                        String joke = response.getString("joke").toString();
+                        //String delivery = response.getString("delivery").toString();
 
-                    jokeTextView.setText(question);
-                    //jokeTextView.setText(response.toString());
-
+                        jokeTextView.setText(joke);
+                        //jokeTextView.setText(response.toString());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
