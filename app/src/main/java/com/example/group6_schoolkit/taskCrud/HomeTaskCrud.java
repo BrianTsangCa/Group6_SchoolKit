@@ -140,7 +140,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
 
-        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getAllTasks());
+        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday());
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
         calendarView = findViewById(R.id.calendarView);
