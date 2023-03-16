@@ -107,9 +107,6 @@ public class HomeTaskCrud extends AppCompatActivity {
                         int pressure = mainObj.getInt("pressure");
                         int humidity = mainObj.getInt("humidity");
                         testWeather.setText(String.format("%.2f\u2103",celsius));
-
-
-
                         }
 
                 } catch (JSONException e) {
