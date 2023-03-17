@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +68,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_10, taskModel.getStatus());
         values.put(COL_11, taskModel.getEmail());
         db.insert(TABLE_NAME, null, values);
-
     }
 
     public void updateTask(int id, TaskModel taskModel){
@@ -104,9 +104,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try{
-            String query = "SELECT * FROM " + TABLE_NAME + " WHERE " +
-                    "strftime('%Y-%m-%d', " + COL_4 + ") = ?";
-            c = db.rawQuery(query, new String[]{String.format("%04d-%02d-%02d", year, month+1, dayOfMonth)});
+            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") = ?", new String[]{String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)}, null, null ,null );
             if(c!=null){
                 if(c.moveToFirst()){
                     do{
@@ -132,7 +130,40 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+    public ArrayList<TaskModel> getTasksForDateAfterToday(){
+        db=this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
 
+        db.beginTransaction();
+        try{
+            Calendar calendar = Calendar.getInstance();
+            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") >= ?", new String[]{String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR),  calendar.get(Calendar.MONTH)  + 1,  calendar.get(Calendar.DAY_OF_MONTH))}, null, null ,null );
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)) );
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        modelList.add(task);
+
+                    }while(c.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
     public ArrayList<TaskModel> getAllTasks(){
         db=this.getWritableDatabase();
         Cursor c = null;

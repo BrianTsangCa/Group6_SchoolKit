@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -80,6 +82,9 @@ public class EditTaskActivity extends AppCompatActivity {
         comment=findViewById(R.id.EditTxt_EditPage_comment);
         btn_SaveChanges=findViewById(R.id.btn_SaveChanges);
         btn_Delete=findViewById(R.id.btn_Delete);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        owner.setText(user.getDisplayName());
+        owner.setKeyListener(null);
 
         //getExtra from all tasks
         Intent intent =getIntent();

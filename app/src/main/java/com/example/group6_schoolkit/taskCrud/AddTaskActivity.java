@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -81,6 +83,9 @@ public class AddTaskActivity extends AppCompatActivity {
         owner=findViewById(R.id.EditTxt_CreatePage_Owner);
         comment=findViewById(R.id.EditTxt_CreatePage_comment);
         btn_createTask=findViewById(R.id.btn_CreateTask);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        owner.setText(user.getDisplayName());
+        owner.setKeyListener(null);
 
         spinnerUsers=findViewById(R.id.spinnerUsers);
 
@@ -97,6 +102,7 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ownerFromList=spinnerUsers.getSelectedItem().toString();
+                owner.setText(ownerFromList);
             }
 
             @Override
