@@ -200,7 +200,8 @@ public class HomeTaskCrud extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeTaskCrud.this, AllTasksActivity.class);
-                intent.putExtra("EMAIL", email);
+                intent.putExtra("USEREMAILLIST", userEmailList);
+                intent.putExtra("USERS", usersList);
                 startActivity(intent);
             }
         });

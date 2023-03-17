@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,16 +15,24 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -32,20 +42,29 @@ public class EditTaskActivity extends AppCompatActivity {
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
     private String email;
+    private String ownerFromList;
+    HashMap<String, String> userEmailList = new HashMap<>();
+    ArrayList<String> users = new ArrayList<>();
+    Spinner spinnerUserList;
+    private DatabaseReference mDatabase;
+    ArrayList<String> usersList = new ArrayList<>();
+
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
-        //this is to get the user email HomeTaskCrud
-        intent=getIntent();
-        email=intent.getExtras().getString("EMAIL");
+
+
 
         title=findViewById(R.id.EditTxt_EditPage_title);
         desc = findViewById(R.id.EditTxt_EditPage_description);
         due = findViewById(R.id.EditTxt_EditPage_duedate);
+        spinnerUserList=(findViewById(R.id.spnrOwnerEditTask));
         due.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
+
+
 
         due = findViewById(R.id.EditTxt_EditPage_duedate);
         due.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +149,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),owner.getText().toString(), comment.getText().toString(),1, email));
+                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1, userEmailList.get(ownerFromList)));
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });
@@ -140,6 +159,45 @@ public class EditTaskActivity extends AppCompatActivity {
             myDB = new DataBaseHelper(EditTaskActivity.this);
             myDB.deleteTask(intent.getExtras().getInt("ID"));
             startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
+        });
+
+        //this is to get all regstered users and key-val pair of users-email to be used in spinner
+
+        mDatabase= FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> userList = snapshot.getChildren();
+                for (DataSnapshot x:userList
+                ) {
+                    System.out.println(x.child("name").getValue().toString());
+                    usersList.add(x.child("name").getValue().toString());
+                    userEmailList.put(x.child("name").getValue().toString(), x.child("email").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        //this is to set the spinner with the user array values
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, usersList);
+        spinnerUserList.setAdapter(dataAdapter);
+
+        //this is to get the owner selected from spinner
+        spinnerUserList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ownerFromList=spinnerUserList.getSelectedItem().toString();
+                Toast.makeText(EditTaskActivity.this, "Selected "+ ownerFromList, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
 
 
