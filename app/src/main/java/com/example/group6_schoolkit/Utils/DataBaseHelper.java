@@ -33,11 +33,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String COL_8  = "OWNER";
     private static final String COL_9  = "COMMENT";
     private static final String COL_10  = "STATUS";
+    private static final String COL_11 = "EMAIL";
 
 
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null,  1);
+        super(context, DATABASE_NAME, null,  2);
     }
 
     @Override
@@ -49,6 +50,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
         onCreate(db);
+        db.execSQL("ALTER TABLE TASK_TABLE ADD COLUMN EMAIL TEXT DEFAULT NULL;");
+
     }
 
     public void insertTask(TaskModel taskModel){
@@ -63,6 +66,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_8, taskModel.getOwner());
         values.put(COL_9, taskModel.getCommentBox());
         values.put(COL_10, taskModel.getStatus());
+        values.put(COL_11, taskModel.getEmail());
         db.insert(TABLE_NAME, null, values);
     }
 
@@ -78,6 +82,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_8, taskModel.getOwner());
         values.put(COL_9, taskModel.getCommentBox());
         values.put(COL_10, taskModel.getStatus());
+        values.put(COL_11, taskModel.getEmail());
         db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
@@ -181,6 +186,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
                         modelList.add(task);
 
                     }while(c.moveToNext());

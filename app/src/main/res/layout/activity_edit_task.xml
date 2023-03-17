@@ -218,4 +218,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_Header" />
 
+    <Spinner
+        android:id="@+id/spnrOwnerEditTask"
+        android:layout_width="407dp"
+        android:layout_height="41dp"
+        android:prompt="@string/prompt"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Delete" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
