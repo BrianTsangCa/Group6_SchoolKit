@@ -11,12 +11,17 @@ import android.widget.TextView;
 
 import com.example.group6_schoolkit.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 //import kotlinx.coroutines.scheduling.Task;
 
 public class CustomAdapterForListVIew extends BaseAdapter {
     ArrayList<TaskModel> nameLists = new ArrayList<>();
+    private int dueDayInYear;
 
     public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists) {
         this.nameLists = nameLists;
@@ -49,6 +54,28 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         TextView txtViewHomeDes = view.findViewById(R.id.textViewHomeDes);
         Button btnHomeImportance = view.findViewById(R.id.buttonHomeImportance);
 
+
+        //TimerTask------
+        Calendar todayCalendar = Calendar.getInstance();
+        int today = todayCalendar.get(Calendar.DAY_OF_YEAR);
+
+        //parse the string 3-06-2023 to DAY_OF_YEAR
+        String dueDay = nameLists.get(i).getDueDate();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dueDate = format.parse(dueDay);
+            Calendar dueCalendar = Calendar.getInstance();
+            dueCalendar.setTime(dueDate);
+            dueDayInYear = dueCalendar.get(Calendar.DAY_OF_YEAR);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        btnHomeImportance.setText(String.valueOf(dueDayInYear-today)+" Days");
+
+        //End of timer task
+
+
         txtviewHomeTitle.setText(nameLists.get(i).getTitle().toString());
         txtViewHomeDate.setText(nameLists.get(i).getDueDate().toString());
         txtViewHomeDes.setText(nameLists.get(i).getDescription().toString());
@@ -59,7 +86,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         }else if(importance.equals("Medium")){
             btnHomeImportance.setBackgroundColor(Color.BLUE);
         }else if(importance.equals("Low")){
-            btnHomeImportance.setBackgroundColor(Color.CYAN);
+            btnHomeImportance.setBackgroundColor(Color.DKGRAY);
         }
         //drawable?
         //put into inttent

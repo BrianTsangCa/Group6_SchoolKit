@@ -19,7 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.group6_schoolkit.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecyclerViewAdapter.ViewHolder> {
 
@@ -30,6 +34,8 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
     public TasksRecyclerViewAdapter(Context mContext){
         this.mContext=mContext;
     }
+
+    private int dueDayInYear;
 
     @NonNull
     @Override
@@ -48,12 +54,32 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         holder.txtViewDate.setText(tasks.get(position).getDueDate());
         holder.btnImportance.setText(tasks.get(position).getImportance());
 
+
+        //Timer Task
+        Calendar todayCalendar = Calendar.getInstance();
+        int today = todayCalendar.get(Calendar.DAY_OF_YEAR);
+        //parse the string 3-06-2023 to DAY_OF_YEAR
+        String dueDay = holder.txtViewDate.getText().toString();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dueDate = format.parse(dueDay);
+            Calendar dueCalendar = Calendar.getInstance();
+            dueCalendar.setTime(dueDate);
+            dueDayInYear = dueCalendar.get(Calendar.DAY_OF_YEAR);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.textViewTimerTask.setText(String.valueOf(dueDayInYear-today)+" Days");
+
+        //---end of Timer task
+
         if(holder.btnImportance.getText().toString().equals("High")){
             holder.btnImportance.setBackgroundColor(Color.RED);
         }else if(holder.btnImportance.getText().toString().equals("Medium")){
             holder.btnImportance.setBackgroundColor(Color.BLUE);
         }else if(holder.btnImportance.getText().toString().equals("Low")){
-            holder.btnImportance.setBackgroundColor(Color.CYAN);
+            holder.btnImportance.setBackgroundColor(Color.DKGRAY);
         }
 
         //This is for Task Details
@@ -103,6 +129,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         private TextView txtTitle,txtAuthor, txtDescription;
         private TextView txtViewDate;
         private Button btnImportance;
+        private TextView textViewTimerTask;
 
 
         // private ImageView downArrow, upArrow;
@@ -118,6 +145,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             txtAuthor=itemView.findViewById(R.id.textViewAuthor);
             txtDescription = itemView.findViewById(R.id.textViewDescription);
             btnImportance = itemView.findViewById(R.id.buttonImportance);
+            textViewTimerTask = itemView.findViewById(R.id.textViewTimerTask);
 
         }
     }

@@ -129,6 +129,8 @@ public class HomeTaskCrud extends AppCompatActivity {
         //end of API
 
 
+
+
 //        String nameDisplay= FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().getResult().child("name").getValue().toString();
 //        mDatabase = FirebaseDatabase.getInstance().getReference().child()
 
