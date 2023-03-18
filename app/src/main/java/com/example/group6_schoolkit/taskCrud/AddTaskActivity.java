@@ -103,6 +103,7 @@ public class AddTaskActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ownerFromList=spinnerUsers.getSelectedItem().toString();
                 owner.setText(ownerFromList);
+                Toast.makeText(AddTaskActivity.this, "Owner Selected is " + owner, Toast.LENGTH_SHORT).show();
             }
 
             @Override

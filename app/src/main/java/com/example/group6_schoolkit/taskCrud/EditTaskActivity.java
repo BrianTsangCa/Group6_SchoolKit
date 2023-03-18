@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -164,6 +165,14 @@ public class EditTaskActivity extends AppCompatActivity {
         //this is to get all regstered users and key-val pair of users-email to be used in spinner
 
         mDatabase= FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get();
+
+
+        //this is to set the spinner with the user array values
+
+
+
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -173,6 +182,25 @@ public class EditTaskActivity extends AppCompatActivity {
                     System.out.println(x.child("name").getValue().toString());
                     usersList.add(x.child("name").getValue().toString());
                     userEmailList.put(x.child("name").getValue().toString(), x.child("email").getValue().toString());
+
+
+
+                    //this is to get the owner selected from spinner
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(EditTaskActivity.this,android.R.layout.simple_spinner_dropdown_item, usersList);
+                    spinnerUserList.setAdapter(dataAdapter);
+                    spinnerUserList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            Toast.makeText(EditTaskActivity.this, "Item is Selected", Toast.LENGTH_SHORT).show();
+                            ownerFromList=spinnerUserList.getSelectedItem().toString();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+                            Toast.makeText(EditTaskActivity.this, "NOTHING is Selected", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             }
 
@@ -182,25 +210,6 @@ public class EditTaskActivity extends AppCompatActivity {
             }
         });
 
-        //this is to set the spinner with the user array values
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, usersList);
-        spinnerUserList.setAdapter(dataAdapter);
-
-        //this is to get the owner selected from spinner
-        spinnerUserList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ownerFromList=spinnerUserList.getSelectedItem().toString();
-                Toast.makeText(EditTaskActivity.this, "Selected "+ ownerFromList, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-
+//        System.out.println(usersList.size());
     }
 }

@@ -255,7 +255,7 @@ public class HomeTaskCrud extends AppCompatActivity {
                 Iterable<DataSnapshot> userList = snapshot.getChildren();
                 for (DataSnapshot x:userList
                      ) {
-                    System.out.println(x.child("name").getValue().toString());
+//                    System.out.println(x.child("name").getValue().toString());
                     usersList.add(x.child("name").getValue().toString());
                     userEmailList.put(x.child("name").getValue().toString(), x.child("email").getValue().toString());
                 }
