@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Group6_SchoolKit"
         tools:targetApi="31">
         <activity
+            android:name=".taskCrud.CommentHistory"
+            android:exported="false" />
+        <activity
             android:name=".Login.RegActivity"
             android:exported="false">
             <meta-data

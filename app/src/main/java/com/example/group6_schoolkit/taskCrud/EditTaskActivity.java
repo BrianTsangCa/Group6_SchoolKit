@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,13 +45,16 @@ public class EditTaskActivity extends AppCompatActivity {
     private Spinner spinner_EditPage_importance;
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
-    private String email;
-    private String ownerFromList;
+    private String email,userLoggedIn;
+    private String ownerFromList, commentHist;
     HashMap<String, String> userEmailList = new HashMap<>();
     ArrayList<String> users = new ArrayList<>();
     Spinner spinnerUserList;
     private DatabaseReference mDatabase;
     ArrayList<String> usersList = new ArrayList<>();
+    private TextView txtView_EditPage_comment;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     Intent intent;
     @Override
@@ -58,7 +64,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
 
-
+        txtView_EditPage_comment=findViewById(R.id.txtView_EditPage_comment);
         title=findViewById(R.id.EditTxt_EditPage_title);
         desc = findViewById(R.id.EditTxt_EditPage_description);
         due = findViewById(R.id.EditTxt_EditPage_duedate);
@@ -106,12 +112,16 @@ public class EditTaskActivity extends AppCompatActivity {
         owner.setText(user.getDisplayName());
         owner.setKeyListener(null);
 
+
+
         //getExtra from all tasks
         Intent intent =getIntent();
         title.setText(intent.getExtras().getString("TITLE"));
         Log.d("getEx:",intent.getExtras().getString("TITLE"));
         owner.setText(intent.getExtras().getString("OWNER"));
         due.setText(intent.getExtras().getString("DATE"));
+
+
 
         if(intent.getExtras().getString("IMPORTANCE").equals("Low")){
             spinner_EditPage_importance.setSelection(0);
@@ -122,7 +132,8 @@ public class EditTaskActivity extends AppCompatActivity {
         }
         category.setText(intent.getExtras().getString("CATEGORY"));
         course.setText(intent.getExtras().getString("COURSE"));
-        comment.setText(intent.getExtras().getString("COMMENT"));
+        commentHist=intent.getExtras().getString("COMMENT");
+//        comment.setText(intent.getExtras().getString("COMMENT"));
         desc.setText(intent.getExtras().getString("DESCRIPTION"));
 
         btn_SaveChanges.setOnClickListener((View view)-> {
@@ -150,7 +161,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1, userEmailList.get(ownerFromList)));
+                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, dateFormat.format(calendar.getTime())+"\n"+userLoggedIn+"\n"+comment.getText().toString(),1, userEmailList.get(ownerFromList)));
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });
@@ -165,13 +176,10 @@ public class EditTaskActivity extends AppCompatActivity {
         //this is to get all regstered users and key-val pair of users-email to be used in spinner
 
         mDatabase= FirebaseDatabase.getInstance().getReference("Users");
-        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get();
+        
 
 
         //this is to set the spinner with the user array values
-
-
-
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -211,5 +219,30 @@ public class EditTaskActivity extends AppCompatActivity {
         });
 
 //        System.out.println(usersList.size());
+        txtView_EditPage_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditTaskActivity.this, CommentHistory.class);
+                intent.putExtra("HIST",commentHist);
+                startActivity(intent);
+            }
+        });
+
+        //this is to get the current user who is logged in
+        mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        DataSnapshot dataSnapshot = task.getResult();
+                        userLoggedIn=String.valueOf(dataSnapshot.child("name").getValue());
+                    }else {
+                        Toast.makeText(EditTaskActivity.this, "Inner error", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(EditTaskActivity.this, "Outer error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

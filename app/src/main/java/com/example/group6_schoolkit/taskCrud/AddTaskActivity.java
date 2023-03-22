@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -39,7 +40,10 @@ public class AddTaskActivity extends AppCompatActivity {
     Intent intent;
     ArrayList<String> users = new ArrayList<>();
     HashMap<String, String> userEmailList = new HashMap<>();
-    String ownerFromList, userName, email, role;
+    String ownerFromList, userName, email, role, userLoggedIn;
+
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class AddTaskActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         owner.setText(user.getDisplayName());
         owner.setKeyListener(null);
-
+        LocalDate currentDate;
         spinnerUsers=findViewById(R.id.spinnerUsers);
 
         //this is to get the user array from HomeTaskCrud
@@ -94,6 +98,7 @@ public class AddTaskActivity extends AppCompatActivity {
         users=intent.getExtras().getStringArrayList("USERS");
         email=intent.getExtras().getString("EMAIL");
         userEmailList = (HashMap<String, String>) getIntent().getSerializableExtra("USEREMAILLIST");
+        userLoggedIn=intent.getExtras().getString("USERLOGGEDIN");
         Toast.makeText(this, "email is "+email, Toast.LENGTH_SHORT).show();
         //this is to set the spinner with the user array values
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, users);
@@ -139,7 +144,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, comment.getText().toString(),1, userEmailList.get(ownerFromList)));
+                myDB.insertTask(new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, dateFormat.format(calendar.getTime())+"\n"+userLoggedIn+"\n"+comment.getText().toString(),1, userEmailList.get(ownerFromList)));
                 startActivity(new Intent(AddTaskActivity.this,HomeTaskCrud.class));
             }
         });
