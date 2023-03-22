@@ -80,9 +80,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         values.put(COL_6, taskModel.getCategory());
         values.put(COL_7, taskModel.getCourse());
         values.put(COL_8, taskModel.getOwner());
-        values.put(COL_9, taskModel.getCommentBox());
+//        values.put(COL_9, taskModel.getCommentBox());
         values.put(COL_10, taskModel.getStatus());
         values.put(COL_11, taskModel.getEmail());
+        // Retrieve the current value of COL_9 from the database
+        Cursor cursor = db.query(TABLE_NAME, new String[] { COL_9 }, "ID=?", new String[] { String.valueOf(id) }, null, null, null);
+        String currentCommentBox = null;
+        if (cursor.moveToFirst()) {
+            currentCommentBox = cursor.getString(cursor.getColumnIndex(COL_9));
+        }
+        cursor.close();
+
+        // Append the new value to the current value of COL_9
+        String newCommentBox = taskModel.getCommentBox();
+        if (currentCommentBox != null) {
+            newCommentBox = currentCommentBox + "|" + newCommentBox;
+        }
+        values.put(COL_9, newCommentBox);
         db.update(TABLE_NAME , values , "ID=?" , new String[]{String.valueOf(id)});
     }
 
