@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.group6_schoolkit.Login.activity_login;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +58,7 @@ import java.util.List;
 
 public class HomeTaskCrud extends AppCompatActivity {
     Button button, button2;
+    ImageButton btn_logout;
     TextView taskHomeTitle;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
@@ -136,6 +139,7 @@ public class HomeTaskCrud extends AppCompatActivity {
 
         button = findViewById(R.id.btnSeeAllTasks);
         button2 = findViewById(R.id.btnAddTask);
+        btn_logout=findViewById(R.id.btn_logout);
         taskHomeTitle=findViewById(R.id.taskHomeTitle);
         firebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -223,6 +227,12 @@ public class HomeTaskCrud extends AppCompatActivity {
             }
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeTaskCrud.this, activity_login.class));
+            }
+        });
         //this is to get the user information and the role, to display
         mDatabase= FirebaseDatabase.getInstance().getReference("Users");
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
