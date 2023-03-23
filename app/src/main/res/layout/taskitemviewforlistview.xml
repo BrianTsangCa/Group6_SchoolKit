@@ -14,7 +14,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         app:cardBackgroundColor="#FFA15A"
         app:cardCornerRadius="8dp">
 

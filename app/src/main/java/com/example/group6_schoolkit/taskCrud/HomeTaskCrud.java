@@ -141,17 +141,14 @@ public class HomeTaskCrud extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
 
-        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday());
+        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday(),this);
         listMy = findViewById(R.id.listViewHomeTaskCrud);
         listMy.setAdapter(adapter);
-        calendarView = findViewById(R.id.calendarView);
-        calendarView.setVisibility(View.GONE);
-        btnSwitchView = findViewById(R.id.btnSwitchView);
         //dire to edit task
-        listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.notifyDataSetChanged();
+                Log.d("clicked","Is clicked");
                 Toast.makeText(HomeTaskCrud.this, "Clicked!", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(HomeTaskCrud.this, EditTaskActivity.class);
                 myIntent.putExtra("TITLE",adapter.nameLists.get(position).getTitle());
@@ -166,7 +163,11 @@ public class HomeTaskCrud extends AppCompatActivity {
                 myIntent.putExtra("ID", adapter.nameLists.get(position).getId());
                 startActivity(myIntent);
             }
-        });
+        }); */
+        calendarView = findViewById(R.id.calendarView);
+        calendarView.setVisibility(View.GONE);
+        btnSwitchView = findViewById(R.id.btnSwitchView);
+
 
         btnSwitchView.setOnClickListener(new View.OnClickListener() {
             @Override
