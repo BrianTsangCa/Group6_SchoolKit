@@ -117,7 +117,6 @@ public class EditTaskActivity extends AppCompatActivity {
         //getExtra from all tasks
         Intent intent =getIntent();
         title.setText(intent.getExtras().getString("TITLE"));
-        Log.d("getEx:",intent.getExtras().getString("TITLE"));
         owner.setText(intent.getExtras().getString("OWNER"));
         due.setText(intent.getExtras().getString("DATE"));
 

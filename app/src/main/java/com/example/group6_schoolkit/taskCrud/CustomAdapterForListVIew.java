@@ -1,13 +1,18 @@
 package com.example.group6_schoolkit.taskCrud;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 
@@ -22,9 +27,15 @@ import java.util.Date;
 public class CustomAdapterForListVIew extends BaseAdapter {
     ArrayList<TaskModel> nameLists = new ArrayList<>();
     private int dueDayInYear;
+    private Context mContext;
 
     public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists) {
         this.nameLists = nameLists;
+    }
+
+    public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists, Context mContext) {
+        this.nameLists = nameLists;
+        this.mContext = mContext;
     }
 
     @Override
@@ -39,7 +50,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -90,6 +101,30 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         }
         //drawable?
         //put into inttent
+
+
+        //dire to edit task
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(mContext,EditTaskActivity.class);
+                myIntent.putExtra("TITLE",nameLists.get(i).getTitle());
+                myIntent.putExtra("DESC", nameLists.get(i).getDescription());
+                myIntent.putExtra("OWNER", nameLists.get(i).getOwner());
+                myIntent.putExtra("DATE",nameLists.get(i).getDueDate());
+                myIntent.putExtra("IMPORTANCE",nameLists.get(i).getImportance());
+                myIntent.putExtra("CATEGORY",nameLists.get(i).getCategory());
+                myIntent.putExtra("COURSE",nameLists.get(i).getCourse());
+                myIntent.putExtra("COMMENT",nameLists.get(i).getCommentBox());
+                myIntent.putExtra("DESCRIPTION",nameLists.get(i).getDescription());
+                myIntent.putExtra("ID", nameLists.get(i).getId());
+                mContext.startActivity(myIntent);
+
+            }
+        });
+
+
 
 
 
