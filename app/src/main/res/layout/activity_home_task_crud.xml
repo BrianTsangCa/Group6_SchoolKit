@@ -46,6 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,10 +115,10 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewHomeWeatherIcon" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vancouver"
+        android:text="N/A"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"

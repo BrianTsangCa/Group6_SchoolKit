@@ -78,9 +78,11 @@ public class HomeTaskCrud extends AppCompatActivity {
         setContentView(R.layout.activity_home_task_crud);
         //API
         TextView testWeather = findViewById(R.id.textViewTestWeather);
+        TextView textViewCity = findViewById(R.id.textViewCity);
+
         String weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=Vancouver&appid=e0d951f88f25e04392121560f7ccc632";
         //Weather Api
-       // String jokeUrl = "https://v2.jokeapi.dev/joke/Programming";
+
 
         //Joke Api
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(weatherUrl, null, new Response.Listener<JSONObject>() {
@@ -88,7 +90,6 @@ public class HomeTaskCrud extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     if(response != null){
-                        JSONObject mainObj = response.getJSONObject("main");
 
                         //icon
 
@@ -101,6 +102,7 @@ public class HomeTaskCrud extends AppCompatActivity {
 
 
                         //temperature
+                        JSONObject mainObj = response.getJSONObject("main");
                         double temp = mainObj.getDouble("temp");
                         double celsius = temp-273.15;
                         double feelsLike = mainObj.getDouble("feels_like");
@@ -109,7 +111,12 @@ public class HomeTaskCrud extends AppCompatActivity {
                         int pressure = mainObj.getInt("pressure");
                         int humidity = mainObj.getInt("humidity");
                         testWeather.setText(String.format("%.2f\u2103",celsius));
-                        }
+
+                        //City
+                        String cityName = response.getString("name");
+                        textViewCity.setText(cityName);
+
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,9 +134,6 @@ public class HomeTaskCrud extends AppCompatActivity {
 
         //requestQueue.add(jsonObjectRequest2);
         //end of API
-
-
-
 
 //        String nameDisplay= FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().getResult().child("name").getValue().toString();
 //        mDatabase = FirebaseDatabase.getInstance().getReference().child()
