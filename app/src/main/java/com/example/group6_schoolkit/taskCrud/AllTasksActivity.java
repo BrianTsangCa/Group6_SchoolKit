@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -41,7 +42,9 @@ public class AllTasksActivity extends AppCompatActivity {
 //        ArrayList<TaskModel> taskList = new ArrayList<>();
 
 //        adapter.setBooks(TaskUtil.getAllTasks());
-        adapter.setBooks(myDB.getAllTasks());
+        Intent intent =getIntent();
+        String email=intent.getExtras().getString("USEREMAIL");
+        adapter.setBooks(myDB.getTasksForDateAfterTodayForOneUser(email));
 
 
         //this is for the delete all task option

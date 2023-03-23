@@ -149,10 +149,8 @@ public class HomeTaskCrud extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
-
-        CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday(),this);
         listMy = findViewById(R.id.listViewHomeTaskCrud);
-        listMy.setAdapter(adapter);
+
         //dire to edit task
        /* listMy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -215,6 +213,12 @@ public class HomeTaskCrud extends AppCompatActivity {
                 intent.putExtra("USEREMAILLIST", userEmailList);
                 intent.putExtra("USERS", usersList);
                 intent.putExtra("USERLOGGEDIN",nameDisplay);
+
+
+
+
+
+                intent.putExtra("USEREMAIL",email);
                 startActivity(intent);
             }
         });
@@ -251,6 +255,16 @@ public class HomeTaskCrud extends AppCompatActivity {
                         email = String.valueOf(dataSnapshot.child("email").getValue());
                         taskHomeTitle.setText("WELCOME "+"\n"+nameDisplay
                         +"\n"+ roleDisplay);
+                        if(roleDisplay==null){
+                            Toast.makeText(HomeTaskCrud.this, "unknown Role is login", Toast.LENGTH_SHORT).show();
+                        }else if(roleDisplay.equals("Admin")){
+                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday(),HomeTaskCrud.this);
+                            listMy.setAdapter(adapter);
+                        }else{
+                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterTodayForOneUser(email),HomeTaskCrud.this);
+                            listMy.setAdapter(adapter);
+                        }
+
                         Toast.makeText(HomeTaskCrud.this, "email is "+email, Toast.LENGTH_SHORT).show();
                         Toast.makeText(HomeTaskCrud.this, "Name is "+nameDisplay, Toast.LENGTH_SHORT).show();
                     }else{
@@ -283,6 +297,7 @@ public class HomeTaskCrud extends AppCompatActivity {
 
             }
         });
+
 
     }
 }

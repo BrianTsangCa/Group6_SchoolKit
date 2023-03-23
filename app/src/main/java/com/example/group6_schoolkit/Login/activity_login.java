@@ -27,9 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class activity_login extends AppCompatActivity {
     TextView editText_LoginPage_StudentId, editTextTextPassword2;
     FirebaseAuth firebaseAuth;
@@ -105,17 +102,8 @@ public class activity_login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Timer timer=new Timer();
-                            TimerTask timerTask=new TimerTask() {
-                                @Override
-                                public void run() {
-                                    startActivity(new Intent(activity_login.this, HomeTaskCrud.class));
-                                }
-                            };
-                            timer.schedule(timerTask,1000);
                             Toast.makeText(activity_login.this, "Logged in", Toast.LENGTH_SHORT).show();
-
-
+                            startActivity(new Intent(activity_login.this, HomeTaskCrud.class));
                         }else{
                             Toast.makeText(activity_login.this, "not logged in", Toast.LENGTH_SHORT).show();
                         }
