@@ -59,6 +59,7 @@ import java.util.List;
 public class HomeTaskCrud extends AppCompatActivity {
     Button button, button2;
     ImageButton btn_logout;
+
     TextView taskHomeTitle;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
