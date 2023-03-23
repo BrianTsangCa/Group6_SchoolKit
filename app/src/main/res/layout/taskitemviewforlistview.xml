@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="#FFA15A"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="10dp">
 
         <TextView
             android:id="@+id/textViewHomeDes"
@@ -68,6 +68,15 @@
             android:layout_height="match_parent">
 
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/textViewHomeTaskOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="210dp"
+            android:layout_marginTop="12dp"
+            android:text="TextView"
+            android:textColor="#FFFFFF" />
 
     </androidx.cardview.widget.CardView>
 

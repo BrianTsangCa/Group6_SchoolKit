@@ -64,6 +64,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         TextView txtViewHomeDate = view.findViewById(R.id.textViewHomeDate);
         TextView txtViewHomeDes = view.findViewById(R.id.textViewHomeDes);
         Button btnHomeImportance = view.findViewById(R.id.buttonHomeImportance);
+        TextView textViewHomeTaskOwner = view.findViewById(R.id.textViewHomeTaskOwner);
 
 
         //TimerTask------
@@ -90,6 +91,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
         txtviewHomeTitle.setText(nameLists.get(i).getTitle().toString());
         txtViewHomeDate.setText(nameLists.get(i).getDueDate().toString());
         txtViewHomeDes.setText(nameLists.get(i).getDescription().toString());
+        textViewHomeTaskOwner.setText(nameLists.get(i).getOwner());
 
         String importance = nameLists.get(i).getImportance();
         if(importance.equals("High")){
