@@ -121,6 +121,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
                 myIntent.putExtra("COMMENT",nameLists.get(i).getCommentBox());
                 myIntent.putExtra("DESCRIPTION",nameLists.get(i).getDescription());
                 myIntent.putExtra("ID", nameLists.get(i).getId());
+                myIntent.putExtra("ROLE", "User");
                 mContext.startActivity(myIntent);
 
             }

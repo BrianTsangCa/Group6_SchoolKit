@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -41,7 +42,16 @@ public class AllTasksActivity extends AppCompatActivity {
 //        ArrayList<TaskModel> taskList = new ArrayList<>();
 
 //        adapter.setBooks(TaskUtil.getAllTasks());
-        adapter.setBooks(myDB.getAllTasks());
+        Intent intent =getIntent();
+
+        String email=intent.getExtras().getString("EMAIL");
+        String role=intent.getExtras().getString("ROLE");
+        if(role.equals("User")){
+            adapter.setBooks(myDB.getTasksForOneUser(email));
+        }else if (role.equals("Admin")){
+            adapter.setBooks(myDB.getAllTasks());
+        }
+
 
 
         //this is for the delete all task option

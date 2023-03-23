@@ -178,6 +178,77 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+    public ArrayList<TaskModel> getTasksForDateAfterTodayForOneUser(String email){
+        db=this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try{
+            Calendar calendar = Calendar.getInstance();
+            c = db.query(TABLE_NAME, null,
+                    "strftime('%Y-%m-%d', " + COL_4 + ") >= ? AND " + COL_11 + " = ?",
+                    new String[]{String.format("%04d-%02d-%02d", calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)),
+                            email},
+                    null, null, null);
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)) );
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        modelList.add(task);
+
+                    }while(c.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
+    public ArrayList<TaskModel> getTasksForOneUser(String email){
+        db = this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try {
+            c = db.query(TABLE_NAME, null, COL_11 + " = ?", new String[]{email}, null, null, null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    do {
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)));
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        modelList.add(task);
+                    } while (c.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
     public ArrayList<TaskModel> getAllTasks(){
         db=this.getWritableDatabase();
         Cursor c = null;

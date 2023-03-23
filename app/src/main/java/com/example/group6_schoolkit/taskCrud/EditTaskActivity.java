@@ -45,7 +45,7 @@ public class EditTaskActivity extends AppCompatActivity {
     private Spinner spinner_EditPage_importance;
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
-    private String email,userLoggedIn;
+    private String email,userLoggedIn,role;
     private String ownerFromList, commentHist;
     HashMap<String, String> userEmailList = new HashMap<>();
     ArrayList<String> users = new ArrayList<>();
@@ -55,8 +55,8 @@ public class EditTaskActivity extends AppCompatActivity {
     private TextView txtView_EditPage_comment;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
     Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +116,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         //getExtra from all tasks
         Intent intent =getIntent();
+        role=intent.getExtras().getString("ROLE");
         title.setText(intent.getExtras().getString("TITLE"));
         owner.setText(intent.getExtras().getString("OWNER"));
         due.setText(intent.getExtras().getString("DATE"));
@@ -191,10 +192,22 @@ public class EditTaskActivity extends AppCompatActivity {
                     userEmailList.put(x.child("name").getValue().toString(), x.child("email").getValue().toString());
 
 
+                    role=intent.getExtras().getString("ROLE");
 
                     //this is to get the owner selected from spinner
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(EditTaskActivity.this,android.R.layout.simple_spinner_dropdown_item, usersList);
                     spinnerUserList.setAdapter(dataAdapter);
+                    if(role.equals("User")){
+                        String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                        int index = users.indexOf(selectedItem);
+                        spinnerUserList.setSelection(index);
+                        spinnerUserList.setVisibility(View.INVISIBLE);
+                    }else{
+                        String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                        int index = users.indexOf(selectedItem);
+                        spinnerUserList.setSelection(index);
+                        spinnerUserList.setVisibility(View.VISIBLE);
+                    }
                     spinnerUserList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
