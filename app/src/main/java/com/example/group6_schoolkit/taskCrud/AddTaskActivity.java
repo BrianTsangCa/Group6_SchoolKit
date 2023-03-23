@@ -34,13 +34,13 @@ public class AddTaskActivity extends AppCompatActivity {
     private Spinner spinner_CreatePage_importance;
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
-
     Spinner spinnerUsers;
 
     Intent intent;
+
     ArrayList<String> users = new ArrayList<>();
     HashMap<String, String> userEmailList = new HashMap<>();
-    String ownerFromList, userName, email, role, userLoggedIn;
+    String ownerFromList, userName, email, userLoggedIn,role;
 
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -95,14 +95,28 @@ public class AddTaskActivity extends AppCompatActivity {
 
         //this is to get the user array from HomeTaskCrud
         intent=getIntent();
-        users=intent.getExtras().getStringArrayList("USERS");
+        role=intent.getExtras().getString("ROLE");
+
         email=intent.getExtras().getString("EMAIL");
         userEmailList = (HashMap<String, String>) getIntent().getSerializableExtra("USEREMAILLIST");
         userLoggedIn=intent.getExtras().getString("USERLOGGEDIN");
         Toast.makeText(this, "email is "+email, Toast.LENGTH_SHORT).show();
         //this is to set the spinner with the user array values
+        users=intent.getExtras().getStringArrayList("USERS");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, users);
         spinnerUsers.setAdapter(dataAdapter);
+
+        if(role.equals("User")){
+            String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+            int index = users.indexOf(selectedItem);
+            spinnerUsers.setSelection(index);
+            spinnerUsers.setVisibility(View.INVISIBLE);
+        }else{
+            String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+            int index = users.indexOf(selectedItem);
+            spinnerUsers.setSelection(index);
+            spinnerUsers.setVisibility(View.VISIBLE);
+        }
         spinnerUsers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

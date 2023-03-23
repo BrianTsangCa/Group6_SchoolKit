@@ -43,8 +43,15 @@ public class AllTasksActivity extends AppCompatActivity {
 
 //        adapter.setBooks(TaskUtil.getAllTasks());
         Intent intent =getIntent();
-        String email=intent.getExtras().getString("USEREMAIL");
-        adapter.setBooks(myDB.getTasksForDateAfterTodayForOneUser(email));
+
+        String email=intent.getExtras().getString("EMAIL");
+        String role=intent.getExtras().getString("ROLE");
+        if(role.equals("User")){
+            adapter.setBooks(myDB.getTasksForOneUser(email));
+        }else if (role.equals("Admin")){
+            adapter.setBooks(myDB.getAllTasks());
+        }
+
 
 
         //this is for the delete all task option

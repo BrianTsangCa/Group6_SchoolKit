@@ -213,12 +213,8 @@ public class HomeTaskCrud extends AppCompatActivity {
                 intent.putExtra("USEREMAILLIST", userEmailList);
                 intent.putExtra("USERS", usersList);
                 intent.putExtra("USERLOGGEDIN",nameDisplay);
-
-
-
-
-
-                intent.putExtra("USEREMAIL",email);
+                intent.putExtra("EMAIL",email);
+                intent.putExtra("ROLE",roleDisplay);
                 startActivity(intent);
             }
         });
@@ -229,9 +225,10 @@ public class HomeTaskCrud extends AppCompatActivity {
                 Intent intent = new Intent(HomeTaskCrud.this, AddTaskActivity.class);
                 //this is to get the list of users
                 intent.putExtra("USERS", usersList);
-                intent.putExtra("EMAIL", email);
                 intent.putExtra("USEREMAILLIST", userEmailList);
                 intent.putExtra("USERLOGGEDIN",nameDisplay);
+                intent.putExtra("EMAIL",email);
+                intent.putExtra("ROLE",roleDisplay);
                 startActivity(intent);
             }
         });
