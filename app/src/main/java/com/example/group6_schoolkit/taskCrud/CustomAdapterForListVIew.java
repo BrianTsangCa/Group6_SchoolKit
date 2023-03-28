@@ -125,6 +125,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
                 myIntent.putExtra("ID", nameLists.get(i).getId());
                 myIntent.putExtra("ROLE", "User");
                 myIntent.putExtra("ROLEfromHome", role);
+                myIntent.putExtra("STATUSFromList", nameLists.get(i).getStatus());
                 mContext.startActivity(myIntent);
 
             }
