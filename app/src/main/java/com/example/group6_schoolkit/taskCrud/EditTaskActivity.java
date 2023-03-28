@@ -52,7 +52,7 @@ public class EditTaskActivity extends AppCompatActivity {
     Spinner spinnerUserList;
     private DatabaseReference mDatabase;
     ArrayList<String> usersList = new ArrayList<>();
-    private TextView txtView_EditPage_comment;
+    private TextView txtView_EditPage_comment, status;
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     Intent intent;
@@ -69,6 +69,7 @@ public class EditTaskActivity extends AppCompatActivity {
         desc = findViewById(R.id.EditTxt_EditPage_description);
         due = findViewById(R.id.EditTxt_EditPage_duedate);
         spinnerUserList=(findViewById(R.id.spnrOwnerEditTask));
+        status=findViewById(R.id.txtViewStatus);
         due.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
 
 
@@ -117,10 +118,11 @@ public class EditTaskActivity extends AppCompatActivity {
         //getExtra from all tasks
         Intent intent =getIntent();
         role=intent.getExtras().getString("ROLE2");
+        String roleFromHome = intent.getExtras().getString("ROLEfromHome");
         title.setText(intent.getExtras().getString("TITLE"));
         owner.setText(intent.getExtras().getString("OWNER"));
         due.setText(intent.getExtras().getString("DATE"));
-
+        status.setText(intent.getExtras().getString("STATUS"));
 
 
         if(intent.getExtras().getString("IMPORTANCE").equals("Low")){
@@ -197,16 +199,35 @@ public class EditTaskActivity extends AppCompatActivity {
                     //this is to get the owner selected from spinner
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(EditTaskActivity.this,android.R.layout.simple_spinner_dropdown_item, usersList);
                     spinnerUserList.setAdapter(dataAdapter);
-                    if(role.equals("User")){
-                        String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
-                        int index = users.indexOf(selectedItem);
-                        spinnerUserList.setSelection(index);
-                        spinnerUserList.setVisibility(View.INVISIBLE);
-                    }else{
-                        String  selectedItem = intent.getExtras().getString("USERLOGGEDIN");
-                        int index = users.indexOf(selectedItem);
-                        spinnerUserList.setSelection(index);
-                        spinnerUserList.setVisibility(View.VISIBLE);
+                    try{
+                        if(role.equals("User")){
+                            String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                            int index = users.indexOf(selectedItem);
+                            spinnerUserList.setSelection(index);
+                            spinnerUserList.setVisibility(View.INVISIBLE);
+                        }else {
+                            String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                            int index = users.indexOf(selectedItem);
+                            spinnerUserList.setSelection(index);
+                            spinnerUserList.setVisibility(View.VISIBLE);
+                        }
+                    }catch (Exception e){
+                        if(roleFromHome.equals("User")){
+                            String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                            int index = users.indexOf(selectedItem);
+                            spinnerUserList.setSelection(index);
+                            spinnerUserList.setVisibility(View.INVISIBLE);
+                        }else{
+                            String  selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+                            int index = users.indexOf(selectedItem);
+                            spinnerUserList.setSelection(index);
+                            spinnerUserList.setVisibility(View.VISIBLE);
+                    }
+//                    if(role.equals("User") || roleFromHome.equals("User")){
+//                        String selectedItem = intent.getExtras().getString("USERLOGGEDIN");
+//                        int index = users.indexOf(selectedItem);
+//                        spinnerUserList.setSelection(index);
+//                        spinnerUserList.setVisibility(View.INVISIBLE);
                     }
                     spinnerUserList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

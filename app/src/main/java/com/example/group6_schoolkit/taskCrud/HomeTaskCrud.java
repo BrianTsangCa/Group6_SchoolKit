@@ -255,10 +255,10 @@ public class HomeTaskCrud extends AppCompatActivity {
                         if(roleDisplay==null){
                             Toast.makeText(HomeTaskCrud.this, "unknown Role is login", Toast.LENGTH_SHORT).show();
                         }else if(roleDisplay.equals("Admin")){
-                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday(),HomeTaskCrud.this);
+                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterToday(),HomeTaskCrud.this, roleDisplay);
                             listMy.setAdapter(adapter);
                         }else{
-                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterTodayForOneUser(email),HomeTaskCrud.this);
+                            CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(myDB.getTasksForDateAfterTodayForOneUser(email),HomeTaskCrud.this, roleDisplay);
                             listMy.setAdapter(adapter);
                         }
 
