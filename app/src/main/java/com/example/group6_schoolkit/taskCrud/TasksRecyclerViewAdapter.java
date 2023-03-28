@@ -36,6 +36,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
     }
 
     private int dueDayInYear;
+    private String role;
 
     @NonNull
     @Override
@@ -100,6 +101,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("DESCRIPTION",tasks.get(position).getDescription());
                 intent.putExtra("ID", tasks.get(position).getId());
                 intent.putExtra("ROLE", "User");
+                intent.putExtra("ROLE2", role);
                 mContext.startActivity(intent);
             }
         });
@@ -119,9 +121,10 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         return tasks.size();
     }
 
-    public void setBooks(ArrayList<TaskModel> tasks) {
+    public void setBooks(ArrayList<TaskModel> tasks, String role) {
         this.tasks = tasks;
         notifyDataSetChanged();
+        this.role=role;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
