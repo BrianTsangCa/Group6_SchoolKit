@@ -46,10 +46,11 @@ public class EditTaskActivity extends AppCompatActivity {
     private DataBaseHelper myDB;
     private Calendar selectedDate = Calendar.getInstance();
     private String email,userLoggedIn,role;
-    private String ownerFromList, commentHist;
+    private String ownerFromList, commentHist, statusFromSPin;
+    int updatedStatus;
     HashMap<String, String> userEmailList = new HashMap<>();
     ArrayList<String> users = new ArrayList<>();
-    Spinner spinnerUserList;
+    Spinner spinnerUserList,spinStatus;
     private DatabaseReference mDatabase;
     ArrayList<String> usersList = new ArrayList<>();
     private TextView txtView_EditPage_comment, status;
@@ -69,7 +70,8 @@ public class EditTaskActivity extends AppCompatActivity {
         desc = findViewById(R.id.EditTxt_EditPage_description);
         due = findViewById(R.id.EditTxt_EditPage_duedate);
         spinnerUserList=(findViewById(R.id.spnrOwnerEditTask));
-        status=findViewById(R.id.txtViewStatus);
+        spinStatus=findViewById(R.id.spinStatus);
+        status=findViewById(R.id.txtView_EditPage_Header);
         due.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(selectedDate.getTime()));
 
 
@@ -115,15 +117,22 @@ public class EditTaskActivity extends AppCompatActivity {
 
 
 
-        //getExtra from all tasks
+        //getExtra from all tasks & home task crud
         Intent intent =getIntent();
         role=intent.getExtras().getString("ROLE2");
         String roleFromHome = intent.getExtras().getString("ROLEfromHome");
         title.setText(intent.getExtras().getString("TITLE"));
         owner.setText(intent.getExtras().getString("OWNER"));
         due.setText(intent.getExtras().getString("DATE"));
-        status.setText(intent.getExtras().getString("STATUS"));
-
+//        status.setText(intent.getExtras().getInt("STATUS"));
+        System.out.println("STatus is " + intent.getExtras().getInt("STATUS"));
+        int  getStatus = intent.getExtras().getInt("STATUS");
+        int getStatusFormHome = intent.getExtras().getInt("STATUSFromList");
+        if(getStatus==1||getStatusFormHome==1){
+            status.setText("Incomplete");
+        }else{
+            status.setText("COMEPLETE");
+        }
 
         if(intent.getExtras().getString("IMPORTANCE").equals("Low")){
             spinner_EditPage_importance.setSelection(0);
@@ -163,7 +172,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     importance="High";
                 }
-                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, dateFormat.format(calendar.getTime())+"\n"+userLoggedIn+"\n"+comment.getText().toString(),1, userEmailList.get(ownerFromList)));
+                myDB.updateTask(intent.getExtras().getInt("ID"),new TaskModel(title.getText().toString(),desc.getText().toString(), due.getText().toString(), importance, category.getText().toString(), course.getText().toString(),ownerFromList, dateFormat.format(calendar.getTime())+"\n"+userLoggedIn+"\n"+comment.getText().toString(),updatedStatus, userEmailList.get(ownerFromList)));
                 startActivity(new Intent(EditTaskActivity.this,HomeTaskCrud.class));
             }
         });
@@ -275,6 +284,27 @@ public class EditTaskActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(EditTaskActivity.this, "Outer error", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //this is to get the status from the spinner
+        spinStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                switch (i){
+                    case 0: updatedStatus=0;
+                        Toast.makeText(EditTaskActivity.this, "Selected "+spinStatus.getSelectedItem(), Toast.LENGTH_SHORT).show();break;
+                    case 1:updatedStatus=1;
+                        Toast.makeText(EditTaskActivity.this, "Selected "+spinStatus.getSelectedItem(), Toast.LENGTH_SHORT).show();break;
+                    default:break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }

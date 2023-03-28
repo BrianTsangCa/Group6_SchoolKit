@@ -12,6 +12,7 @@
     <string name="SwitchView">Switch View</string>
     <string name="prmp">Select Role</string>
     <string name="prompt">Select User</string>
+    <string name="selectState">Select Status</string>
     <string-array name="importance">
         <item>Low</item>
         <item>Medium</item>
@@ -20,6 +21,10 @@
     <string-array name="role">
         <item>User</item>
         <item>Admin</item>
+    </string-array>
+    <string-array name="status">
+        <item>Complete</item>
+        <item>Incomplete</item>
     </string-array>
 
 
