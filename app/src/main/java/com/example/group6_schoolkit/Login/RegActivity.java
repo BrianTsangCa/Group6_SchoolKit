@@ -35,6 +35,8 @@ public class RegActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
+        getSupportActionBar().hide();
+
 
         buttonLogin=findViewById(R.id.buttonLogin);
         buttonRegister=findViewById(R.id.buttonRegister);
