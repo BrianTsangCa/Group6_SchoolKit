@@ -175,12 +175,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_comment" />
 
+    <TextView
+        android:id="@+id/txtViewStatus"
+        android:layout_width="94dp"
+        android:layout_height="35dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment"
+        app:layout_constraintVertical_bias="0.396" />
+
     <Button
         android:id="@+id/btn_SaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Save changes"
+        android:text="Save"
         app:layout_constraintEnd_toStartOf="@+id/btn_Delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
@@ -227,6 +239,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Delete" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_Delete"
+        app:layout_constraintVertical_bias="0.64" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

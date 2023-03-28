@@ -28,14 +28,16 @@ public class CustomAdapterForListVIew extends BaseAdapter {
     ArrayList<TaskModel> nameLists = new ArrayList<>();
     private int dueDayInYear;
     private Context mContext;
+    private String role;
 
     public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists) {
         this.nameLists = nameLists;
     }
 
-    public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists, Context mContext) {
+    public CustomAdapterForListVIew(ArrayList<TaskModel> nameLists, Context mContext, String role) {
         this.nameLists = nameLists;
         this.mContext = mContext;
+        this.role=role;
     }
 
     @Override
@@ -122,6 +124,7 @@ public class CustomAdapterForListVIew extends BaseAdapter {
                 myIntent.putExtra("DESCRIPTION",nameLists.get(i).getDescription());
                 myIntent.putExtra("ID", nameLists.get(i).getId());
                 myIntent.putExtra("ROLE", "User");
+                myIntent.putExtra("ROLEfromHome", role);
                 mContext.startActivity(myIntent);
 
             }

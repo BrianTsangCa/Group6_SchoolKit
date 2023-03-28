@@ -102,6 +102,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
                 intent.putExtra("ID", tasks.get(position).getId());
                 intent.putExtra("ROLE", "User");
                 intent.putExtra("ROLE2", role);
+                intent.putExtra("STATUS", tasks.get(position).getStatus());
                 mContext.startActivity(intent);
             }
         });
