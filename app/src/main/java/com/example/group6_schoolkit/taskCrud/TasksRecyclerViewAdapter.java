@@ -83,6 +83,10 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             holder.btnImportance.setBackgroundColor(Color.DKGRAY);
         }
 
+        //this is to set the image to 'check' if status is complete
+        if(tasks.get(position).getStatus()==0){
+            holder.imgBook.setImageResource(R.drawable.ic_stat_name);
+        }
         //This is for Task Details
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
