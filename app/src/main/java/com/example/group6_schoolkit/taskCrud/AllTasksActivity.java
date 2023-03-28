@@ -47,9 +47,9 @@ public class AllTasksActivity extends AppCompatActivity {
         String email=intent.getExtras().getString("EMAIL");
         String role=intent.getExtras().getString("ROLE");
         if(role.equals("User")){
-            adapter.setBooks(myDB.getTasksForOneUser(email));
+            adapter.setBooks(myDB.getTasksForOneUser(email), role);
         }else if (role.equals("Admin")){
-            adapter.setBooks(myDB.getAllTasks());
+            adapter.setBooks(myDB.getAllTasks(), role);
         }
 
 
@@ -59,7 +59,7 @@ public class AllTasksActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 myDB.deleteAllTasks();
-                adapter.setBooks(myDB.getAllTasks());
+                adapter.setBooks(myDB.getAllTasks(), role);
             }
         });
 
