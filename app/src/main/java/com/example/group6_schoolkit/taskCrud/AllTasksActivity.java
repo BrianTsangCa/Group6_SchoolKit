@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +27,8 @@ public class AllTasksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_tasks);
+        getSupportActionBar().hide();
+
 
         myDB = new DataBaseHelper(AllTasksActivity.this);
         //for testing only. creating 1 instance of task
@@ -56,11 +60,35 @@ public class AllTasksActivity extends AppCompatActivity {
 
         //this is for the delete all task option
         deleteAll.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
-                myDB.deleteAllTasks();
-                adapter.setBooks(myDB.getAllTasks(), role);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AllTasksActivity.this);
+                builder.setMessage("Are you sure you want to do this?")
+                                .setTitle("Confirm")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                myDB.deleteAllTasks();
+                                                adapter.setBooks(myDB.getAllTasks(), role);
+                                            }
+                                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+
             }
+
+
+
         });
 
 

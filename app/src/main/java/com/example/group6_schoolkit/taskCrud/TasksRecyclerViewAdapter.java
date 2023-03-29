@@ -71,16 +71,20 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
             e.printStackTrace();
         }
 
+        if((dueDayInYear-today)<3){
+            holder.textViewTimerTask.setTextColor(Color.RED);
+        }
+
         holder.textViewTimerTask.setText(String.valueOf(dueDayInYear-today)+" Days");
 
         //---end of Timer task
 
         if(holder.btnImportance.getText().toString().equals("High")){
-            holder.btnImportance.setBackgroundColor(Color.RED);
+            holder.btnImportance.setBackgroundColor(Color.parseColor("#FFA921"));
         }else if(holder.btnImportance.getText().toString().equals("Medium")){
-            holder.btnImportance.setBackgroundColor(Color.BLUE);
+            holder.btnImportance.setBackgroundColor(Color.parseColor("#FEE582"));
         }else if(holder.btnImportance.getText().toString().equals("Low")){
-            holder.btnImportance.setBackgroundColor(Color.DKGRAY);
+            holder.btnImportance.setBackgroundColor(Color.parseColor("#FFFBC3"));
         }
 
         //this is to set the image to 'check' if status is complete
