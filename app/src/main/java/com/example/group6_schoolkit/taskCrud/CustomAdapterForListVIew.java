@@ -85,6 +85,9 @@ public class CustomAdapterForListVIew extends BaseAdapter {
             e.printStackTrace();
         }
 
+        if((dueDayInYear-today)<=3){
+            btnHomeImportance.setTextColor(Color.RED);
+        }
         btnHomeImportance.setText(String.valueOf(dueDayInYear-today)+" Days");
 
         //End of timer task
@@ -97,11 +100,11 @@ public class CustomAdapterForListVIew extends BaseAdapter {
 
         String importance = nameLists.get(i).getImportance();
         if(importance.equals("High")){
-            btnHomeImportance.setBackgroundColor(Color.RED);
+            btnHomeImportance.setBackgroundColor(Color.parseColor("#FFA921"));
         }else if(importance.equals("Medium")){
-            btnHomeImportance.setBackgroundColor(Color.BLUE);
+            btnHomeImportance.setBackgroundColor(Color.parseColor("#FEE582"));
         }else if(importance.equals("Low")){
-            btnHomeImportance.setBackgroundColor(Color.DKGRAY);
+            btnHomeImportance.setBackgroundColor(Color.parseColor("#FFFBC3"));
         }
         //drawable?
         //put into inttent
