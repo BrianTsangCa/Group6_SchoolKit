@@ -49,6 +49,8 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+        getSupportActionBar().hide();
+
 
         title=findViewById(R.id.EditTxt_CreatePage_title);
         desc = findViewById(R.id.EditTxt_CreatePage_description);

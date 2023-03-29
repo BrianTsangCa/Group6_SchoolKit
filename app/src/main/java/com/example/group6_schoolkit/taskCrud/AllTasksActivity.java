@@ -61,11 +61,10 @@ public class AllTasksActivity extends AppCompatActivity {
         //this is for the delete all task option
         deleteAll.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AllTasksActivity.this);
-                builder.setMessage("Are you sure you want to do this?")
+                builder.setMessage("Are you sure you want to delete all tasks?")
                                 .setTitle("Confirm")
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
