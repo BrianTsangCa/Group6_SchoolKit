@@ -3,6 +3,8 @@ package com.example.group6_schoolkit.taskCrud;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -235,12 +237,36 @@ public class HomeTaskCrud extends AppCompatActivity {
             }
         });
 
+
+       //Logout
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeTaskCrud.this, activity_login.class));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeTaskCrud.this);
+                builder.setMessage("Are you sure you want to log out?")
+                                .setTitle("Confirm")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startActivity(new Intent(HomeTaskCrud.this, activity_login.class));
+                                            }
+                                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
+
+
+
         //this is to get the user information and the role, to display
         mDatabase= FirebaseDatabase.getInstance().getReference("Users");
         mDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {

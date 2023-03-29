@@ -4,16 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF7AC"
+    android:background="#DBF3ED"
     tools:context=".taskCrud.AddTaskActivity">
+
+    <TextView
+        android:id="@+id/txtView_EditPage_Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Edit task"
+        android:textColor="#2E2E2E"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/txtView_EditPage_course"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Course:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_category" />
 
@@ -21,10 +37,11 @@
         android:id="@+id/txtView_EditPage_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Description"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Description:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_course" />
 
@@ -32,10 +49,11 @@
         android:id="@+id/txtView_EditPage_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Comment:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_description" />
 
@@ -43,10 +61,11 @@
         android:id="@+id/txtView_EditPage_duedate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Due Date:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.66"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_EditPage_importance" />
 
@@ -54,9 +73,11 @@
         android:id="@+id/txtView_EditPage_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Category:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_title" />
 
@@ -64,148 +85,118 @@
         android:id="@+id/txtView_EditPage_importance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Importance:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_Owner" />
 
-    <TextView
-        android:id="@+id/txtView_EditPage_Header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit task"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02" />
-
     <EditText
         android:id="@+id/EditTxt_EditPage_title"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
         android:ems="10"
         android:inputType="textPersonName"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_Header" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_title" />
 
     <EditText
         android:id="@+id/EditTxt_EditPage_description"
         android:layout_width="350dp"
         android:layout_height="70dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
         android:ems="10"
         android:inputType="textPersonName"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_description" />
 
     <EditText
         android:id="@+id/EditTxt_EditPage_duedate"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
         android:ems="10"
         android:inputType="date"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_EditPage_importance" />
-
-    <Spinner
-        android:id="@+id/spinner_EditPage_importance"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:entries="@array/importance"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_Owner" />
-
-    <EditText
-        android:id="@+id/EditTxt_EditPage_category"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_title" />
-
-    <EditText
-        android:id="@+id/EditTxt_EditPage_course"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_category" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_duedate" />
 
     <EditText
         android:id="@+id/EditTxt_EditPage_Owner"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
         android:ems="10"
         android:inputType="textPersonName"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_Header" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_owner" />
+
+    <Spinner
+        android:id="@+id/spinner_EditPage_importance"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/importance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_importance" />
 
     <EditText
-        android:id="@+id/EditTxt_EditPage_comment"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="4dp"
+        android:id="@+id/EditTxt_EditPage_category"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
         android:ems="10"
         android:inputType="textPersonName"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_comment" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_category" />
 
-    <Button
-        android:id="@+id/btn_SaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Save"
-        app:layout_constraintEnd_toStartOf="@+id/btn_Delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
-
-    <Button
-        android:id="@+id/btn_Delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Delete"
+    <EditText
+        android:id="@+id/EditTxt_EditPage_course"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_box"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="5sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_course" />
 
     <TextView
         android:id="@+id/txtView_EditPage_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Title:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.081"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_Header" />
 
@@ -213,37 +204,101 @@
         android:id="@+id/txtView_EditPage_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Owner:"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_Header" />
 
+    <EditText
+        android:id="@+id/EditTxt_EditPage_comment"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/input_box"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:padding="5sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView_EditPage_comment"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_Delete"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:textColor="#2E2E2E"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment"
+        app:layout_constraintVertical_bias="0.518" />
+
+    <Button
+        android:id="@+id/btn_SaveChanges"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Save"
+        android:textColor="#2E2E2E"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_Delete"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment"
+        app:layout_constraintVertical_bias="0.488" />
+
     <Spinner
         android:id="@+id/spinStatus"
-        android:layout_width="404dp"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="4dp"
         android:entries="@array/status"
         android:prompt="@string/selectState"
         android:spinnerMode="dialog"
-        app:layout_constraintBottom_toTopOf="@+id/spnrOwnerEditTask"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Delete"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.885"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment"
-        app:layout_constraintVertical_bias="0.768" />
+        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
 
     <Spinner
         android:id="@+id/spnrOwnerEditTask"
-        android:layout_width="407dp"
-        android:layout_height="41dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:prompt="@string/prompt"
         android:spinnerMode="dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_Delete"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintVertical_bias="0.175" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Task Status:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_SaveChanges"
+        app:layout_constraintEnd_toStartOf="@+id/spinStatus"
+        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
