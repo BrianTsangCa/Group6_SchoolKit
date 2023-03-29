@@ -49,12 +49,12 @@
         android:id="@+id/txtView_EditPage_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-medium"
         android:text="Comment:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#596FF3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_description" />
 
     <TextView
@@ -300,5 +300,13 @@
         app:layout_constraintHorizontal_bias="0.215"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTxt_EditPage_comment" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/click"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="452dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
