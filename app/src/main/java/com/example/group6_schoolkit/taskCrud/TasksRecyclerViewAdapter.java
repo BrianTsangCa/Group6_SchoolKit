@@ -130,6 +130,11 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         return tasks.size();
     }
 
+    public void setBooks(ArrayList<TaskModel> tasks) {
+        this.tasks = tasks;
+        notifyDataSetChanged();
+    }
+
     public void setBooks(ArrayList<TaskModel> tasks, String role) {
         this.tasks = tasks;
         notifyDataSetChanged();

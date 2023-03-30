@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,12 @@ public class AllTasksActivity extends AppCompatActivity {
         tasksRecycle.setAdapter(adapter);
         tasksRecycle.setLayoutManager(new LinearLayoutManager(this));
 
+        //Search
+        TextView txtSearch = findViewById(R.id.txtSearch);
+        Button buttonSearch = findViewById(R.id.buttonSearch);
+
+
+
 //        ArrayList<TaskModel> taskList = new ArrayList<>();
 
 //        adapter.setBooks(TaskUtil.getAllTasks());
@@ -52,8 +59,39 @@ public class AllTasksActivity extends AppCompatActivity {
         String role=intent.getExtras().getString("ROLE");
         if(role.equals("User")){
             adapter.setBooks(myDB.getTasksForOneUser(email), role);
+
+            buttonSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(txtSearch.getText().toString().isEmpty()){
+                        adapter.setBooks(myDB.getTasksForOneUser(email),role);
+                    }else{
+                        String inputText = txtSearch.getText().toString().trim();
+                        //myDB.getTasksForSearchInput(inputText);
+                        adapter.setBooks(myDB.getTasksForSearchInput(inputText));
+                    }
+
+                }
+            });
+
         }else if (role.equals("Admin")){
             adapter.setBooks(myDB.getAllTasks(), role);
+
+           buttonSearch.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+
+                   if(txtSearch.getText().toString().isEmpty()){
+                       adapter.setBooks(myDB.getAllTasks(),role);
+                   }else{
+                       String inputText = txtSearch.getText().toString().trim();
+                       //myDB.getTasksForSearchInput(inputText);
+                       adapter.setBooks(myDB.getTasksForSearchInput(inputText));
+                   }
+               }
+           });
+
         }
 
 

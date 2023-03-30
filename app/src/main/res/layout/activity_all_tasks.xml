@@ -8,38 +8,11 @@
     tools:context=".taskCrud.AllTasksActivity">
 
     <TextView
-        android:id="@+id/textView_AllTasks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="68dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:text="@string/textViewAllTasks"
-        android:textColor="#2E2E2E"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toStartOf="@+id/deleteAll"
-        app:layout_constraintHorizontal_bias="0.185"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="76dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView_AllTasks"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/action" />
-
-    <TextView
         android:id="@+id/deleteAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="256dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="DELETE"
         android:textColor="#2E2E2E"
@@ -48,24 +21,80 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView_AllTasks"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/action" />
+
+    <TextView
+        android:id="@+id/textView_AllTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="@string/textViewAllTasks"
+        android:textColor="#2E2E2E"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/deleteAll"
+        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="79dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toEndOf="@+id/deleteAll"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/trash" />
+
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="84dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtSearch"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="89dp"
+        android:background="@drawable/input_box"
+        android:ems="10"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:hint="search title here..."
+        android:inputType="textPersonName"
+        android:padding="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tasksRecycleView"
         android:layout_width="wrap_content"
         android:layout_height="544dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_AllTasks" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSearch" />
 </androidx.constraintlayout.widget.ConstraintLayout>
