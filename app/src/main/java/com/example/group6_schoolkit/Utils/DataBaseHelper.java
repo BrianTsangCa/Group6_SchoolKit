@@ -38,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null,  3);
+        super(context, DATABASE_NAME, null,  2);
     }
 
     @Override
@@ -178,6 +178,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+
     public ArrayList<TaskModel> getTasksForDateAfterTodayForOneUser(String email){
         db=this.getWritableDatabase();
         Cursor c = null;
@@ -217,6 +218,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+
     public ArrayList<TaskModel> getTasksForOneUser(String email){
         db = this.getWritableDatabase();
         Cursor c = null;
@@ -249,6 +251,44 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+
+    //Search
+    public ArrayList<TaskModel> getTasksForSearchInput(String input){
+        db = this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try {
+            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    do {
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)));
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        modelList.add(task);
+                    } while (c.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
+
+
+
+
     public ArrayList<TaskModel> getAllTasks(){
         db=this.getWritableDatabase();
         Cursor c = null;

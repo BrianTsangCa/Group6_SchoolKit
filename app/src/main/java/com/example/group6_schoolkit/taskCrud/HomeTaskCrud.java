@@ -3,9 +3,12 @@ package com.example.group6_schoolkit.taskCrud;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
@@ -54,6 +57,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +80,10 @@ public class HomeTaskCrud extends AppCompatActivity {
     private DatabaseReference mDatabase;
     String nameDisplay,roleDisplay, email;
 
+
+
+
+
     //Weather API
 
     @Override
@@ -97,7 +105,7 @@ public class HomeTaskCrud extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    if(response != null){
+                    if (response != null) {
 
                         //icon
 
@@ -105,20 +113,20 @@ public class HomeTaskCrud extends AppCompatActivity {
                         JSONObject weatherObj = weatherArray.getJSONObject(0);
                         String weatherIconCode = weatherObj.getString("icon");
                         ImageView imgweatherIcon = findViewById(R.id.imageViewHomeWeatherIcon);
-                        String iconURL = "https://openweathermap.org/img/wn/" +weatherIconCode +"@2x.png";
+                        String iconURL = "https://openweathermap.org/img/wn/" + weatherIconCode + "@2x.png";
                         Glide.with(HomeTaskCrud.this).load(iconURL).into(imgweatherIcon);
 
 
                         //temperature
                         JSONObject mainObj = response.getJSONObject("main");
                         double temp = mainObj.getDouble("temp");
-                        double celsius = temp-273.15;
+                        double celsius = temp - 273.15;
                         double feelsLike = mainObj.getDouble("feels_like");
                         double tempMin = mainObj.getDouble("temp_min");
                         double tempMax = mainObj.getDouble("temp_max");
                         int pressure = mainObj.getInt("pressure");
                         int humidity = mainObj.getInt("humidity");
-                        testWeather.setText(String.format("%.2f\u2103",celsius));
+                        testWeather.setText(String.format("%.2f\u2103", celsius));
 
                         //City
                         String cityName = response.getString("name");
@@ -148,9 +156,9 @@ public class HomeTaskCrud extends AppCompatActivity {
 
         button = findViewById(R.id.btnSeeAllTasks);
         button2 = findViewById(R.id.btnAddTask);
-        btn_logout=findViewById(R.id.btn_logout);
-        taskHomeTitle=findViewById(R.id.taskHomeTitle);
-        firebaseAuth=FirebaseAuth.getInstance();
+        btn_logout = findViewById(R.id.btn_logout);
+        taskHomeTitle = findViewById(R.id.taskHomeTitle);
+        firebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         myDB = new DataBaseHelper(HomeTaskCrud.this);
         listMy = findViewById(R.id.listViewHomeTaskCrud);
@@ -179,6 +187,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         calendarView.setVisibility(View.GONE);
         btnSwitchView = findViewById(R.id.btnSwitchView);
 
+        //flag
 
         btnSwitchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +195,8 @@ public class HomeTaskCrud extends AppCompatActivity {
                 if (listMy.getVisibility() == View.VISIBLE) {
                     listMy.setVisibility(View.GONE);
                     calendarView.setVisibility(View.VISIBLE);
+
+
                 } else {
                     listMy.setVisibility(View.VISIBLE);
                     calendarView.setVisibility(View.GONE);
@@ -194,6 +205,7 @@ public class HomeTaskCrud extends AppCompatActivity {
         });
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 ArrayList<TaskModel> tasks = myDB.getTasksForDate(year, month, dayOfMonth);
@@ -203,6 +215,13 @@ public class HomeTaskCrud extends AppCompatActivity {
                 calendarView.setVisibility(View.GONE);
             }
         });
+
+
+
+
+
+
+
 
 //        if(user.getUid()== FirebaseDatabase.getInstance().g)
 
