@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,29 +49,52 @@ public class AllTasksActivity extends AppCompatActivity {
         TextView txtSearch = findViewById(R.id.txtSearch);
         Button buttonSearch = findViewById(R.id.buttonSearch);
 
+        //Sorting
+        Button btnSortByDate = findViewById(R.id.buttonSortByDate);
+        Button btnSortByPriority = findViewById(R.id.buttonSortByPriority);
 
 
-//        ArrayList<TaskModel> taskList = new ArrayList<>();
-
-//        adapter.setBooks(TaskUtil.getAllTasks());
+        //Search
         Intent intent =getIntent();
 
         String email=intent.getExtras().getString("EMAIL");
         String role=intent.getExtras().getString("ROLE");
         if(role.equals("User")){
             adapter.setBooks(myDB.getTasksForOneUser(email), role);
-
             buttonSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if(txtSearch.getText().toString().isEmpty()){
+                        btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                        btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
                         adapter.setBooks(myDB.getTasksForOneUser(email),role);
                     }else{
+                        btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                        btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
                         String inputText = txtSearch.getText().toString().trim();
                         //myDB.getTasksForSearchInput(inputText);
                         adapter.setBooks(myDB.getTasksForSearchInput(inputText));
                     }
+                }
+            });
+
+            //sorting by date
+            btnSortByDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                    btnSortByDate.setBackgroundColor(Color.DKGRAY);
+                    adapter.setBooks(myDB.getTasksForOneUserSortByDate(email),role);
+                }
+            });
+
+            //sorting by Priority
+            btnSortByPriority.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnSortByPriority.setBackgroundColor(Color.DKGRAY);
+                    btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
+                    adapter.setBooks(myDB.getTasksForOneUserSortByPriority(email),role);
 
                 }
             });
@@ -81,16 +105,41 @@ public class AllTasksActivity extends AppCompatActivity {
            buttonSearch.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-
                    if(txtSearch.getText().toString().isEmpty()){
+                       btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                       btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
                        adapter.setBooks(myDB.getAllTasks(),role);
                    }else{
+                       btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                       btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
                        String inputText = txtSearch.getText().toString().trim();
                        //myDB.getTasksForSearchInput(inputText);
                        adapter.setBooks(myDB.getTasksForSearchInput(inputText));
                    }
                }
            });
+
+           //sorting by date
+            btnSortByDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnSortByPriority.setBackgroundColor(Color.parseColor("#82A3AC"));
+                    btnSortByDate.setBackgroundColor(Color.DKGRAY);
+
+                    adapter.setBooks(myDB.getAllTasksSorting());
+                }
+            });
+
+            //sorting by priority
+            btnSortByPriority.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnSortByDate.setBackgroundColor(Color.parseColor("#82A3AC"));
+                    btnSortByPriority.setBackgroundColor(Color.DKGRAY);
+
+                    adapter.setBooks(myDB.getAllTasksSortingByPriority());
+                }
+            });
 
         }
 
