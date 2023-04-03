@@ -38,7 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
     public DataBaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null,  2);
+        super(context, DATABASE_NAME, null,  4);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try{
-            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") = ?", new String[]{String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)}, null, null ,null );
+            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") = ?", new String[]{String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)}, null, null ,COL_4+" ASC" );
             if(c!=null){
                 if(c.moveToFirst()){
                     do{
@@ -144,6 +144,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+
     public ArrayList<TaskModel> getTasksForDateAfterToday(){
         db=this.getWritableDatabase();
         Cursor c = null;
@@ -226,7 +227,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            c = db.query(TABLE_NAME, null, COL_11 + " = ?", new String[]{email}, null, null, null);
+            c = db.query(TABLE_NAME, null, COL_11 + " = ?", new String[]{email}, null, null, COL_4+" ASC");
             if (c != null) {
                 if (c.moveToFirst()) {
                     do {
@@ -260,7 +261,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, null);
+            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, COL_4+" ASC");
             if (c != null) {
                 if (c.moveToFirst()) {
                     do {
@@ -296,7 +297,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try{
-            c=db.query(TABLE_NAME, null,null,null, null, null ,null );
+            c=db.query(TABLE_NAME, null,null,null, null, null ,COL_4+" ASC" );
             if(c!=null){
                 if(c.moveToFirst()){
                     do{

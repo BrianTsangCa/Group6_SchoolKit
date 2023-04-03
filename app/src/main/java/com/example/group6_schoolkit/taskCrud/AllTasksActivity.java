@@ -65,6 +65,9 @@ public class AllTasksActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     if(txtSearch.getText().toString().isEmpty()){
+
+
+
                         adapter.setBooks(myDB.getTasksForOneUser(email),role);
                     }else{
                         String inputText = txtSearch.getText().toString().trim();
