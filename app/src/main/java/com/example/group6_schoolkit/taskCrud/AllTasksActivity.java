@@ -48,33 +48,44 @@ public class AllTasksActivity extends AppCompatActivity {
         TextView txtSearch = findViewById(R.id.txtSearch);
         Button buttonSearch = findViewById(R.id.buttonSearch);
 
+        //Sorting
+        Button btnSortByDate = findViewById(R.id.buttonSortByDate);
+        Button btnSortByPriority = findViewById(R.id.buttonSortByPriority);
 
 
-//        ArrayList<TaskModel> taskList = new ArrayList<>();
-
-//        adapter.setBooks(TaskUtil.getAllTasks());
+        //Search
         Intent intent =getIntent();
 
         String email=intent.getExtras().getString("EMAIL");
         String role=intent.getExtras().getString("ROLE");
         if(role.equals("User")){
             adapter.setBooks(myDB.getTasksForOneUser(email), role);
-
             buttonSearch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if(txtSearch.getText().toString().isEmpty()){
-
-
-
                         adapter.setBooks(myDB.getTasksForOneUser(email),role);
                     }else{
                         String inputText = txtSearch.getText().toString().trim();
                         //myDB.getTasksForSearchInput(inputText);
                         adapter.setBooks(myDB.getTasksForSearchInput(inputText));
                     }
+                }
+            });
 
+            //sorting by date
+            btnSortByDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.setBooks(myDB.getTasksForOneUserSortByDate(email),role);
+                }
+            });
+
+            //sorting by Priority
+            btnSortByPriority.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.setBooks(myDB.getTasksForOneUserSortByPriority(email),role);
                 }
             });
 
@@ -94,6 +105,22 @@ public class AllTasksActivity extends AppCompatActivity {
                    }
                }
            });
+
+           //sorting by date
+            btnSortByDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.setBooks(myDB.getAllTasksSorting());
+                }
+            });
+
+            //sorting by priority
+            btnSortByPriority.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter.setBooks(myDB.getAllTasksSortingByPriority());
+                }
+            });
 
         }
 

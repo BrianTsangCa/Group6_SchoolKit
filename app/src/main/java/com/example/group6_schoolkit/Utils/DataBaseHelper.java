@@ -118,7 +118,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try{
-            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") = ?", new String[]{String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)}, null, null ,COL_4+" ASC" );
+            c=db.query(TABLE_NAME, null,"strftime('%Y-%m-%d', " + COL_4 + ") = ?", new String[]{String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)}, null, null ,null );
             if(c!=null){
                 if(c.moveToFirst()){
                     do{
@@ -133,8 +133,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
                         modelList.add(task);
-
                     }while(c.moveToNext());
                 }
             }
@@ -168,8 +168,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
                         modelList.add(task);
-
                     }while(c.moveToNext());
                 }
             }
@@ -208,8 +208,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
                         modelList.add(task);
-
                     }while(c.moveToNext());
                 }
             }
@@ -221,6 +221,42 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<TaskModel> getTasksForOneUser(String email){
+        db = this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try {
+            c = db.query(TABLE_NAME, null, COL_11 + " = ?", new String[]{email}, null, null, null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    do {
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)));
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+
+                        modelList.add(task);
+                    } while (c.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
+
+    //Sort by date
+    public ArrayList<TaskModel> getTasksForOneUserSortByDate(String email){
         db = this.getWritableDatabase();
         Cursor c = null;
         ArrayList<TaskModel> modelList = new ArrayList<>();
@@ -242,6 +278,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+
                         modelList.add(task);
                     } while (c.moveToNext());
                 }
@@ -253,15 +291,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return modelList;
     }
 
-    //Search
-    public ArrayList<TaskModel> getTasksForSearchInput(String input){
+    //sort by PRIORITY
+    public ArrayList<TaskModel> getTasksForOneUserSortByPriority(String email){
         db = this.getWritableDatabase();
         Cursor c = null;
         ArrayList<TaskModel> modelList = new ArrayList<>();
 
         db.beginTransaction();
         try {
-            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, COL_4+" ASC");
+            c = db.query(TABLE_NAME, null, COL_11 + " = ?", new String[]{email}, null, null, "CASE " + COL_5 + " WHEN 'High' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Low' THEN 3 ELSE 4 END ASC");
             if (c != null) {
                 if (c.moveToFirst()) {
                     do {
@@ -276,6 +314,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                         task.setOwner(c.getString(c.getColumnIndex(COL_8)));
                         task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
                         task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+
                         modelList.add(task);
                     } while (c.moveToNext());
                 }
@@ -288,6 +328,40 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
+    //Search
+    public ArrayList<TaskModel> getTasksForSearchInput(String input){
+        db = this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try {
+            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, null);
+            if (c != null) {
+                if (c.moveToFirst()) {
+                    do {
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)));
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+                        modelList.add(task);
+                    } while (c.moveToNext());
+                }
+            }
+        } finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
 
 
     public ArrayList<TaskModel> getAllTasks(){
@@ -297,7 +371,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try{
-            c=db.query(TABLE_NAME, null,null,null, null, null ,COL_4+" ASC" );
+            c=db.query(TABLE_NAME, null,null,null, null, null ,null );
             if(c!=null){
                 if(c.moveToFirst()){
                     do{
@@ -324,4 +398,74 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return modelList;
     }
+
+    public ArrayList<TaskModel> getAllTasksSorting(){
+        db=this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try{
+            c=db.query(TABLE_NAME, null,null,null, null, null ,COL_4+" ASC" );
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)) );
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+                        modelList.add(task);
+                    }while(c.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
+
+    //Sorting by High Medium Low
+    public ArrayList<TaskModel> getAllTasksSortingByPriority(){
+        db=this.getWritableDatabase();
+        Cursor c = null;
+        ArrayList<TaskModel> modelList = new ArrayList<>();
+
+        db.beginTransaction();
+        try{
+            c=db.query(TABLE_NAME, null,null,null, null, null ,"CASE " + COL_5 + " WHEN 'High' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Low' THEN 3 ELSE 4 END ASC");
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        TaskModel task = new TaskModel();
+                        task.setId(c.getInt(c.getColumnIndex(COL_1)));
+                        task.setTitle(c.getString(c.getColumnIndex(COL_2)) );
+                        task.setDescription(c.getString(c.getColumnIndex(COL_3)));
+                        task.setDueDate(c.getString(c.getColumnIndex(COL_4)));
+                        task.setImportance(c.getString(c.getColumnIndex(COL_5)));
+                        task.setCategory(c.getString(c.getColumnIndex(COL_6)));
+                        task.setCourse(c.getString(c.getColumnIndex(COL_7)));
+                        task.setOwner(c.getString(c.getColumnIndex(COL_8)));
+                        task.setCommentBox(c.getString(c.getColumnIndex(COL_9)));
+                        task.setStatus(c.getInt(c.getColumnIndex(COL_10)));
+                        task.setEmail(c.getString(c.getColumnIndex(COL_11)));
+                        modelList.add(task);
+                    }while(c.moveToNext());
+                }
+            }
+        }finally {
+            db.endTransaction();
+            c.close();
+        }
+        return modelList;
+    }
+
 }
