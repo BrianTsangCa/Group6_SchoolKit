@@ -25,7 +25,7 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     ArrayList<String> daysInMonth;
     String month;
     List<TaskModel> tasks;
-    List<TaskModel> taskToReturn;
+    List<TaskModel> taskToReturn = new ArrayList<>();
     SetonClick_ setonClick_;
     HashMap<Integer, TaskModel > taskAndPosition = new HashMap<>();
 
@@ -60,9 +60,10 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
             @Override
             public void onClick(View view) {
                 setonClick_.onClick_(holder.getAdapterPosition());
-//
-//
-
+                taskToReturn.clear();
+                taskToReturn.add(taskAndPosition.get(holder.getAdapterPosition()));
+                setonClick_.taskToReturn(taskToReturn);
+                notifyDataSetChanged();
             }
         });
 
@@ -160,7 +161,7 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
 
     public interface SetonClick_{
         public void onClick_(int i);
-//        public void taskToReturn(List<TaskModel> task);
+        public void taskToReturn(List<TaskModel> task);
 
     }
 }

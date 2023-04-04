@@ -49,20 +49,31 @@ public class MainActivityCal extends AppCompatActivity {
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
 //        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
-
         CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks(), new CalendarAdapterRecycler.SetonClick_() {
             @Override
             public void onClick_(int i) {
                 Toast.makeText(MainActivityCal.this, daysInMonth.get(i).toString(), Toast.LENGTH_SHORT).show();
-//                CalendarAdapterRecycler adapterRecycler2 = new CalendarAdapterRecycler();
-//                String title=
-//                adapterRecycler2.taskAndPosition.get(i).getTitle().toString();
-//                Toast.makeText(MainActivityCal.this, title, Toast.LENGTH_SHORT).show();
+//                List<TaskModel> tasks = adapterRecycler.taskToReturn;
+
+            }
+
+            @Override
+            public void taskToReturn(List<TaskModel> task) {
+                try {
+                    for (TaskModel t: task
+                         ) {
+                        Toast.makeText(MainActivityCal.this, t.getTitle(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(MainActivityCal.this, "No Task For this day", Toast.LENGTH_SHORT).show();
+                }
 
             }
 
 
         });
+
         GridLayoutManager gd = new GridLayoutManager(this, 7);
         calendarRecyclerView.setLayoutManager(gd);
         calendarRecyclerView.setAdapter(adapterRecycler);
