@@ -14,7 +14,10 @@ import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+//import kotlinx.coroutines.scheduling.Task;
 
 //2
 public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapterRecycler.ViewHolder_>{
@@ -22,13 +25,28 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     ArrayList<String> daysInMonth;
     String month;
     List<TaskModel> tasks;
+    List<TaskModel> taskToReturn;
+    SetonClick_ setonClick_;
+    HashMap<Integer, TaskModel > taskAndPosition = new HashMap<>();
 
+
+    public CalendarAdapterRecycler(ArrayList<String> daysInMonth, String month, List<TaskModel> tasks, SetonClick_ setonClick_) {
+        this.daysInMonth = daysInMonth;
+        this.month=month;
+        this.tasks=tasks;
+        this.setonClick_=setonClick_;
+    }
     public CalendarAdapterRecycler(ArrayList<String> daysInMonth, String month, List<TaskModel> tasks) {
         this.daysInMonth = daysInMonth;
         this.month=month;
         this.tasks=tasks;
+
     }
-//6
+
+    public CalendarAdapterRecycler() {
+    }
+
+    //6
     //4 constructor
     @NonNull
     @Override
@@ -38,6 +56,17 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) (parent.getHeight() * 0.166666666);
         ViewHolder_ holder = new ViewHolder_(view);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setonClick_.onClick_(holder.getAdapterPosition());
+//
+//
+
+            }
+        });
+
+
 
         return holder;
     }
@@ -59,38 +88,36 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
 //            System.out.println(month2+monthFromDB);
             if(month2.equals("01") && monthFromDB.equals("January")){
 //                System.out.println("APRIL TEST OK " + daysInMonth.size());
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             } else if (month2.equals("02") && monthFromDB.equals("February")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("03") && monthFromDB.equals("March")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("04") && monthFromDB.equals("April")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("05") && monthFromDB.equals("May")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("06") && monthFromDB.equals("June")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("07") && monthFromDB.equals("July")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("08") && monthFromDB.equals("August")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("09") && monthFromDB.equals("September")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("10") && monthFromDB.equals("October")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("11") && monthFromDB.equals("November")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("12") && monthFromDB.equals("December")) {
-                colorGrey(day,  position,  holder);
+                colorGrey(day,  position,  holder, tasks.get(i));
             }
             else{
                 System.out.println("APRIL TEST NOT OK");
             }
 
-
-
-
         }
+
     }
 //5
     @Override
@@ -107,12 +134,21 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
         }
     }
 
-    public void colorGrey(String day, int position, ViewHolder_ holder){
+    public void colorGrey(String day, int position, ViewHolder_ holder, TaskModel task){
         for(int j=0;j<daysInMonth.size();j++){
 //
             try{
                 if(Integer.parseInt(daysInMonth.get(position))==Integer.parseInt(day)){
-                    holder.textView.setBackgroundColor(Color.LTGRAY);
+                    switch (task.getImportance().toString()){
+                        case "Low":holder.textView.setBackgroundColor(Color.LTGRAY);break;
+                        case "Medium":holder.textView.setBackgroundColor(Color.GREEN);break;
+                        case "High":holder.textView.setBackgroundColor(Color.RED);break;
+                        default:break;
+                    }
+//                    holder.textView.setBackgroundColor(Color.LTGRAY);
+                    taskAndPosition.put(holder.getAdapterPosition(),task );
+
+
                     break;
                 }
             }catch (Exception e){
@@ -120,5 +156,11 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
             }
 
         }
+    }
+
+    public interface SetonClick_{
+        public void onClick_(int i);
+//        public void taskToReturn(List<TaskModel> task);
+
     }
 }

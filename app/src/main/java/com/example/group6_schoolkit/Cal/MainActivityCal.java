@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.example.group6_schoolkit.taskCrud.TaskModel;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -25,6 +27,8 @@ public class MainActivityCal extends AppCompatActivity {
     private LocalDate selectedDate;
     private TextView monthYearText;
     private DataBaseHelper myDB;
+    List<TaskModel> allTask=new ArrayList<>();
+    TaskModel taskToGet = new TaskModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +40,29 @@ public class MainActivityCal extends AppCompatActivity {
         selectedDate = LocalDate.now();
         setMonthView();
 
-
+        allTask =myDB.getAllTasks();
 
     }
 
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
+
+//        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
+
+        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks(), new CalendarAdapterRecycler.SetonClick_() {
+            @Override
+            public void onClick_(int i) {
+                Toast.makeText(MainActivityCal.this, daysInMonth.get(i).toString(), Toast.LENGTH_SHORT).show();
+//                CalendarAdapterRecycler adapterRecycler2 = new CalendarAdapterRecycler();
+//                String title=
+//                adapterRecycler2.taskAndPosition.get(i).getTitle().toString();
+//                Toast.makeText(MainActivityCal.this, title, Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        });
         GridLayoutManager gd = new GridLayoutManager(this, 7);
         calendarRecyclerView.setLayoutManager(gd);
         calendarRecyclerView.setAdapter(adapterRecycler);
