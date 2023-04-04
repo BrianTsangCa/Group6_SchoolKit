@@ -26,6 +26,8 @@
         <item>Complete</item>
         <item>Incomplete</item>
     </string-array>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
 
 
 </resources>

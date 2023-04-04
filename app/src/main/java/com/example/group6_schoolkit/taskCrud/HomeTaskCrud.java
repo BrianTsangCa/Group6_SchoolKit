@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.group6_schoolkit.Cal.MainActivityCal;
 import com.example.group6_schoolkit.Login.activity_login;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
@@ -192,15 +193,8 @@ public class HomeTaskCrud extends AppCompatActivity {
         btnSwitchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listMy.getVisibility() == View.VISIBLE) {
-                    listMy.setVisibility(View.GONE);
-                    calendarView.setVisibility(View.VISIBLE);
-
-
-                } else {
-                    listMy.setVisibility(View.VISIBLE);
-                    calendarView.setVisibility(View.GONE);
-                }
+                //this will go to the calendar view
+                startActivity(new Intent(HomeTaskCrud.this, MainActivityCal.class));
             }
         });
 
