@@ -2,11 +2,13 @@ package com.example.group6_schoolkit.Cal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.example.group6_schoolkit.taskCrud.CustomAdapterForListVIew;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
+import com.example.group6_schoolkit.taskCrud.TasksRecyclerViewAdapter;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -32,15 +35,17 @@ public class MainActivityCal extends AppCompatActivity {
     private DataBaseHelper myDB;
     List<TaskModel> allTask=new ArrayList<>();
     ArrayList<TaskModel> tasksForUser = new ArrayList<>();
+    ArrayList<TaskModel> tasksReturned = new ArrayList<>();
     List<TaskModel> tasksForAdmin = new ArrayList<>();
     TaskModel taskToGet = new TaskModel();
     String userRole,userEmail;
-    ListView ListViewCal;
+    RecyclerView ListViewCal;
+    TasksRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cal_layout);
-        ListViewCal=findViewById(R.id.ListViewCal);
+        ListViewCal=findViewById(R.id.taskRecyclerView);
 
         Intent intent=getIntent();
         userRole=intent.getExtras().getString("userloggedinrole");
@@ -66,6 +71,8 @@ public class MainActivityCal extends AppCompatActivity {
 
 
 
+
+
     }
 
     private void setMonthView() {
@@ -77,8 +84,12 @@ public class MainActivityCal extends AppCompatActivity {
             @Override
             public void onClick_(int i, ArrayList<TaskModel> task, int j) {
                 //listview here
-                CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(task);
+                tasksReturned=task;
+                adapter = new TasksRecyclerViewAdapter(MainActivityCal.this);
                 ListViewCal.setAdapter(adapter);
+                ListViewCal.setLayoutManager(new LinearLayoutManager(MainActivityCal.this));
+                adapter.setBooks(tasksReturned, userRole);
+
                 Toast.makeText(MainActivityCal.this, "Holder Position: "+i
                         , Toast.LENGTH_SHORT).show();
                                 try {
