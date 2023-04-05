@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.example.group6_schoolkit.taskCrud.CustomAdapterForListVIew;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
 
 import java.lang.reflect.Array;
@@ -28,19 +31,40 @@ public class MainActivityCal extends AppCompatActivity {
     private TextView monthYearText;
     private DataBaseHelper myDB;
     List<TaskModel> allTask=new ArrayList<>();
+    ArrayList<TaskModel> tasksForUser = new ArrayList<>();
+    List<TaskModel> tasksForAdmin = new ArrayList<>();
     TaskModel taskToGet = new TaskModel();
+    String userRole,userEmail;
+    ListView ListViewCal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cal_layout);
+        ListViewCal=findViewById(R.id.ListViewCal);
+
+        Intent intent=getIntent();
+        userRole=intent.getExtras().getString("userloggedinrole");
+        userEmail=intent.getExtras().getString("userloggedinemail");
+        System.out.println(userRole + userEmail);
 
         myDB = new DataBaseHelper(MainActivityCal.this);
+//        allTask =myDB.getAllTasks();
 
+        if(userRole.equals("Admin")){
+            tasksForUser=myDB.getAllTasks();
+        }else{
+            for (TaskModel task:myDB.getAllTasks()
+            ) {
+                if(task.getEmail().equals(userEmail)){
+                    tasksForUser.add(task);
+                }
+            }
+        }
         initWidgets();
         selectedDate = LocalDate.now();
         setMonthView();
 
-        allTask =myDB.getAllTasks();
+
 
     }
 
@@ -49,27 +73,41 @@ public class MainActivityCal extends AppCompatActivity {
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
 //        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
-        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks(), new CalendarAdapterRecycler.SetonClick_() {
+        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), tasksForUser, new CalendarAdapterRecycler.SetonClick_() {
             @Override
-            public void onClick_(int i) {
-                Toast.makeText(MainActivityCal.this, daysInMonth.get(i).toString(), Toast.LENGTH_SHORT).show();
-//                List<TaskModel> tasks = adapterRecycler.taskToReturn;
-
-            }
-
-            @Override
-            public void taskToReturn(List<TaskModel> task) {
-                try {
+            public void onClick_(int i, ArrayList<TaskModel> task, int j) {
+                //listview here
+                CustomAdapterForListVIew adapter = new CustomAdapterForListVIew(task);
+                ListViewCal.setAdapter(adapter);
+                Toast.makeText(MainActivityCal.this, "Holder Position: "+i
+                        , Toast.LENGTH_SHORT).show();
+                                try {
                     for (TaskModel t: task
                          ) {
-                        Toast.makeText(MainActivityCal.this, t.getTitle(), Toast.LENGTH_SHORT).show();
+
+                        System.out.println(t.getTitle() + " "+ j);
                     }
 
                 }catch (Exception e){
                     Toast.makeText(MainActivityCal.this, "No Task For this day", Toast.LENGTH_SHORT).show();
                 }
-
             }
+
+
+//            @Override
+//            public void taskToReturn(List<TaskModel> task) {
+//                try {
+//                    for (TaskModel t: task
+//                         ) {
+//                        Toast.makeText(MainActivityCal.this, t.getTitle(), Toast.LENGTH_SHORT).show();
+////                        System.out.println(t.getTitle());
+//                    }
+//
+//                }catch (Exception e){
+//                    Toast.makeText(MainActivityCal.this, "No Task For this day", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
 
 
         });

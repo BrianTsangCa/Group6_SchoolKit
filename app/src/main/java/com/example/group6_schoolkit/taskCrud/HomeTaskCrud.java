@@ -195,6 +195,10 @@ public class HomeTaskCrud extends AppCompatActivity {
             public void onClick(View v) {
                 //this will go to the calendar view
                 startActivity(new Intent(HomeTaskCrud.this, MainActivityCal.class));
+                Intent intent = new Intent(HomeTaskCrud.this, MainActivityCal.class);
+                intent.putExtra("userloggedinrole", roleDisplay);
+                intent.putExtra("userloggedinemail", email);
+                startActivity(intent);
             }
         });
 

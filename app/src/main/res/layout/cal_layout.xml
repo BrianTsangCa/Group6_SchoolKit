@@ -123,7 +123,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="314dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ListView
+        android:id="@+id/ListViewCal"
+        android:layout_width="match_parent"
+        android:layout_height="308dp" />
 
 </LinearLayout>
 
