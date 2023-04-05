@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
 import com.example.group6_schoolkit.taskCrud.CustomAdapterForListVIew;
+import com.example.group6_schoolkit.taskCrud.HomeTaskCrud;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
 import com.example.group6_schoolkit.taskCrud.TasksRecyclerViewAdapter;
 
@@ -160,6 +161,12 @@ public class MainActivityCal extends AppCompatActivity {
     private void initWidgets() {
         calendarRecyclerView=findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
+        monthYearText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivityCal.this, HomeTaskCrud.class));
+            }
+        });
     }
 
     public void previousMonthAction(View view)
