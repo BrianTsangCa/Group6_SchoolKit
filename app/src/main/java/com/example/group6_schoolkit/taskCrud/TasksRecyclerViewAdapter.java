@@ -142,6 +142,7 @@ public class TasksRecyclerViewAdapter extends RecyclerView.Adapter<TasksRecycler
         this.role=role;
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView parent;
         private ImageView imgBook;

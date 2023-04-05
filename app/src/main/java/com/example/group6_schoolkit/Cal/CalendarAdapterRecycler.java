@@ -15,7 +15,10 @@ import com.example.group6_schoolkit.taskCrud.TaskModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 //import kotlinx.coroutines.scheduling.Task;
 
@@ -25,9 +28,9 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     ArrayList<String> daysInMonth;
     String month;
     List<TaskModel> tasks;
-    List<TaskModel> taskToReturn;
+//    List<TaskModel> taskToReturn = new ArrayList<>();
     SetonClick_ setonClick_;
-    HashMap<Integer, TaskModel > taskAndPosition = new HashMap<>();
+    HashMap<Integer,ArrayList<TaskModel> > taskAndPosition = new HashMap<>();
 
 
     public CalendarAdapterRecycler(ArrayList<String> daysInMonth, String month, List<TaskModel> tasks, SetonClick_ setonClick_) {
@@ -54,15 +57,28 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cal_layout_cell, parent, false);
         //setting up the size of the cells in calendar view
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight() * 0.166666666);
+        layoutParams.height = (int) (parent.getHeight() * 0.12);
         ViewHolder_ holder = new ViewHolder_(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setonClick_.onClick_(holder.getAdapterPosition());
-//
-//
+//                List<TaskModel> taskToReturn = new ArrayList<>(taskAndPosition.get(holder.getAdapterPosition()));
+//                taskAndPosition.put(holder.getAdapterPosition(), taskToReturn);
+//                taskToReturn.clear();
 
+
+                try{
+                    setonClick_.onClick_(holder.getAdapterPosition(),taskAndPosition.get(holder.getAdapterPosition()), taskAndPosition.get(holder.getAdapterPosition()).size());
+//                    taskToReturn.clear(); notifyDataSetChanged();
+                }catch (Exception e){
+
+                }
+
+//                    taskToReturn=(taskAndPosition.get(holder.getAdapterPosition()));
+
+
+
+                notifyDataSetChanged();
             }
         });
 
@@ -74,6 +90,7 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder_ holder, int position) {
         holder.textView.setText(daysInMonth.get(position));
+//        List<TaskModel> listOfTask=new ArrayList<>();
 //        System.out.println(tasks.size());
         for(int i=0;i< tasks.size();i++){
             String dueDate = tasks.get(i).getDueDate();
@@ -95,6 +112,7 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
                 colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("04") && monthFromDB.equals("April")) {
                 colorGrey(day,  position,  holder, tasks.get(i));
+
             }else if (month2.equals("05") && monthFromDB.equals("May")) {
                 colorGrey(day,  position,  holder, tasks.get(i));
             }else if (month2.equals("06") && monthFromDB.equals("June")) {
@@ -117,7 +135,25 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
             }
 
         }
-
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                List<TaskModel> taskToReturn = new ArrayList<>();
+//                taskToReturn=taskAndPosition.get(holder.getAdapterPosition());
+//                setonClick_.onClick_(holder.getAdapterPosition(),taskToReturn);
+//                try{
+//
+//                }catch (Exception e){
+////                    taskToReturn.clear();
+//                }
+//
+////                    taskToReturn=(taskAndPosition.get(holder.getAdapterPosition()));
+//
+//
+//
+//                notifyDataSetChanged();
+//            }
+//        });
     }
 //5
     @Override
@@ -135,7 +171,8 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     }
 
     public void colorGrey(String day, int position, ViewHolder_ holder, TaskModel task){
-        for(int j=0;j<daysInMonth.size();j++){
+
+//        for(int j=0;j<daysInMonth.size();j++){
 //
             try{
                 if(Integer.parseInt(daysInMonth.get(position))==Integer.parseInt(day)){
@@ -145,21 +182,54 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
                         case "High":holder.textView.setBackgroundColor(Color.RED);break;
                         default:break;
                     }
-//                    holder.textView.setBackgroundColor(Color.LTGRAY);
-                    taskAndPosition.put(holder.getAdapterPosition(),task );
+////                    holder.textView.setBackgroundColor(Color.LTGRAY);
+//                    List<TaskModel> taskList=new ArrayList<>();
+////                    taskList.add(task);
+////                    taskAndPosition.put(holder.getAdapterPosition(),taskList);
+//
+//                    //check if List from hashmap is empty
+//                    List<TaskModel> tasklistTocheck = taskAndPosition.get(holder.getAdapterPosition());
+//                    if(tasklistTocheck.isEmpty() && tasklistTocheck==null){
+//                        taskList.add(task);
+//                        taskAndPosition.put(holder.getAdapterPosition(),taskList);
+//                    }else {
+//                        List<TaskModel> taskToAdd = taskAndPosition.get(holder.getAdapterPosition());
+//                        taskAndPosition.put(holder.getAdapterPosition(),taskToAdd);
+//                    }
+
+                    ArrayList<TaskModel> taskList = taskAndPosition.get(holder.getAdapterPosition());
+                    if (taskList == null || taskList.isEmpty()) {
+                        taskList = new ArrayList<>();
+                        taskList.add(task);
+                        // Add the list to the hashmap with the holder's adapter position as the key
+                        taskAndPosition.put(holder.getAdapterPosition(), taskList);
+
+                        Set<TaskModel> set = new HashSet<>(taskAndPosition.get(holder.getAdapterPosition()));
+                        taskAndPosition.get(holder.getAdapterPosition()).clear();
+                        taskAndPosition.get(holder.getAdapterPosition()).addAll(set);
+                    }else {
+                        // If the list already exists, add the task to it
+                        taskList.add(task);
+                        Set<TaskModel> set = new HashSet<>(taskAndPosition.get(holder.getAdapterPosition()));
+                        taskAndPosition.get(holder.getAdapterPosition()).clear();
+                        taskAndPosition.get(holder.getAdapterPosition()).addAll(set);
+                    }
+//
 
 
-                    break;
+
+
+//                    break;
                 }
             }catch (Exception e){
 
             }
 
-        }
+//        }
     }
 
     public interface SetonClick_{
-        public void onClick_(int i);
+        public void onClick_(int i, ArrayList<TaskModel> task, int j);
 //        public void taskToReturn(List<TaskModel> task);
 
     }

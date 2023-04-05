@@ -2,16 +2,23 @@ package com.example.group6_schoolkit.Cal;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.group6_schoolkit.R;
 import com.example.group6_schoolkit.Utils.DataBaseHelper;
+import com.example.group6_schoolkit.taskCrud.CustomAdapterForListVIew;
+import com.example.group6_schoolkit.taskCrud.HomeTaskCrud;
 import com.example.group6_schoolkit.taskCrud.TaskModel;
+import com.example.group6_schoolkit.taskCrud.TasksRecyclerViewAdapter;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -28,19 +35,44 @@ public class MainActivityCal extends AppCompatActivity {
     private TextView monthYearText;
     private DataBaseHelper myDB;
     List<TaskModel> allTask=new ArrayList<>();
+    ArrayList<TaskModel> tasksForUser = new ArrayList<>();
+    ArrayList<TaskModel> tasksReturned = new ArrayList<>();
+    List<TaskModel> tasksForAdmin = new ArrayList<>();
     TaskModel taskToGet = new TaskModel();
+    String userRole,userEmail;
+    RecyclerView ListViewCal;
+    TasksRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cal_layout);
+        ListViewCal=findViewById(R.id.taskRecyclerView);
+
+        Intent intent=getIntent();
+        userRole=intent.getExtras().getString("userloggedinrole");
+        userEmail=intent.getExtras().getString("userloggedinemail");
+        System.out.println(userRole + userEmail);
 
         myDB = new DataBaseHelper(MainActivityCal.this);
+//        allTask =myDB.getAllTasks();
 
+        if(userRole.equals("Admin")){
+            tasksForUser=myDB.getAllTasks();
+        }else{
+            for (TaskModel task:myDB.getAllTasks()
+            ) {
+                if(task.getEmail().equals(userEmail)){
+                    tasksForUser.add(task);
+                }
+            }
+        }
         initWidgets();
         selectedDate = LocalDate.now();
         setMonthView();
 
-        allTask =myDB.getAllTasks();
+
+
+
 
     }
 
@@ -49,20 +81,49 @@ public class MainActivityCal extends AppCompatActivity {
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
 //        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
-
-        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks(), new CalendarAdapterRecycler.SetonClick_() {
+        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), tasksForUser, new CalendarAdapterRecycler.SetonClick_() {
             @Override
-            public void onClick_(int i) {
-                Toast.makeText(MainActivityCal.this, daysInMonth.get(i).toString(), Toast.LENGTH_SHORT).show();
-//                CalendarAdapterRecycler adapterRecycler2 = new CalendarAdapterRecycler();
-//                String title=
-//                adapterRecycler2.taskAndPosition.get(i).getTitle().toString();
-//                Toast.makeText(MainActivityCal.this, title, Toast.LENGTH_SHORT).show();
+            public void onClick_(int i, ArrayList<TaskModel> task, int j) {
+                //listview here
+                tasksReturned=task;
+                adapter = new TasksRecyclerViewAdapter(MainActivityCal.this);
+                ListViewCal.setAdapter(adapter);
+                ListViewCal.setLayoutManager(new LinearLayoutManager(MainActivityCal.this));
+                adapter.setBooks(tasksReturned, userRole);
 
+                Toast.makeText(MainActivityCal.this, "Holder Position: "+i
+                        , Toast.LENGTH_SHORT).show();
+                                try {
+                    for (TaskModel t: task
+                         ) {
+
+                        System.out.println(t.getTitle() + " "+ j);
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(MainActivityCal.this, "No Task For this day", Toast.LENGTH_SHORT).show();
+                }
             }
 
 
+//            @Override
+//            public void taskToReturn(List<TaskModel> task) {
+//                try {
+//                    for (TaskModel t: task
+//                         ) {
+//                        Toast.makeText(MainActivityCal.this, t.getTitle(), Toast.LENGTH_SHORT).show();
+////                        System.out.println(t.getTitle());
+//                    }
+//
+//                }catch (Exception e){
+//                    Toast.makeText(MainActivityCal.this, "No Task For this day", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+
+
         });
+
         GridLayoutManager gd = new GridLayoutManager(this, 7);
         calendarRecyclerView.setLayoutManager(gd);
         calendarRecyclerView.setAdapter(adapterRecycler);
@@ -100,6 +161,12 @@ public class MainActivityCal extends AppCompatActivity {
     private void initWidgets() {
         calendarRecyclerView=findViewById(R.id.calendarRecyclerView);
         monthYearText = findViewById(R.id.monthYearTV);
+        monthYearText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivityCal.this, HomeTaskCrud.class));
+            }
+        });
     }
 
     public void previousMonthAction(View view)
