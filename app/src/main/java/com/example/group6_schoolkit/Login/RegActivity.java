@@ -87,13 +87,37 @@ public class RegActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String _email = editTextTextEmailAddress.getText().toString().trim();
                 String _password = editTextTextPassword.getText().toString().trim();
                 String _name=editTextTextPersonName.getText().toString().trim();
-
-
-
-
+                int flag=0;
+                String output="";
+                try{
+                if(_email.equals("")){
+                    flag=1;
+                    output="Please input your email address";
+                }
+                if(_password.equals("")){
+                    if(flag==1){
+                        output +=" and password";
+                    }else{
+                        flag=1;
+                        output="Please input your password";
+                    }
+                }
+                if(_name.equals("")){
+                    if(flag==1){
+                        output=output.replace("and",",");
+                        output +=" and name";
+                    }else{
+                        flag=1;
+                        output="Please input your name";
+                    }
+                }
+                if(flag==1){
+                    Toast.makeText(RegActivity.this, output, Toast.LENGTH_SHORT).show();
+                }
 
                 firebaseAuth.createUserWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -133,6 +157,9 @@ public class RegActivity extends AppCompatActivity {
                         }
                     }
                 });
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
 

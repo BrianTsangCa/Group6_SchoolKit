@@ -98,19 +98,41 @@ public class activity_login extends AppCompatActivity {
         btn_LoginPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String _email=editText_LoginPage_StudentId.getText().toString().trim();
-                String _password=editTextTextPassword2.getText().toString().trim();
-                firebaseAuth.signInWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(activity_login.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(activity_login.this, HomeTaskCrud.class));
-                        }else{
-                            Toast.makeText(activity_login.this, "not logged in", Toast.LENGTH_SHORT).show();
-                        }
+                try{
+                    String _email=editText_LoginPage_StudentId.getText().toString().trim();
+                    int flag=0;
+                    String output="";
+                    if(_email.equals("")){
+                        flag=1;
+                        output="Please input your email address";
                     }
-                });
+                    String _password=editTextTextPassword2.getText().toString().trim();
+                    if(_password.equals("")){
+                        if(flag==1){
+                            output +=" and your password";
+                        }else{
+                            flag=1;
+                            output="Please input your password";
+                        }
+
+                    }
+                    if(flag==1){
+                        Toast.makeText(activity_login.this, ""+output, Toast.LENGTH_SHORT).show();
+                    }
+                    firebaseAuth.signInWithEmailAndPassword(_email, _password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(activity_login.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(activity_login.this, HomeTaskCrud.class));
+                            }else{
+                                Toast.makeText(activity_login.this, "not logged in", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
             }
         });
 
