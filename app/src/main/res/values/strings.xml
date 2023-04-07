@@ -23,8 +23,8 @@
         <item>Admin</item>
     </string-array>
     <string-array name="status">
-        <item>Complete</item>
         <item>Incomplete</item>
+        <item>Complete</item>
     </string-array>
     <string name="back"><![CDATA[<-]]></string>
     <string name="forward"><![CDATA[->]]></string>

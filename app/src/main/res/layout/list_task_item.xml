@@ -53,7 +53,7 @@
         <TextView
             android:id="@+id/textViewDescription"
             android:layout_width="272dp"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-medium"
             android:padding="3dp"
             android:text="This is description. The task is not complete.."
