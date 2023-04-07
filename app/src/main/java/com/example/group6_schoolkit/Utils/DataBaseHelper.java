@@ -336,7 +336,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         db.beginTransaction();
         try {
-            c = db.query(TABLE_NAME, null, COL_2 + " = ?", new String[]{input}, null, null, null);
+            c = db.query(TABLE_NAME, null, COL_2 + " LIKE ?", new String[]{"%" + input + "%"}, null, null, null);
             if (c != null) {
                 if (c.moveToFirst()) {
                     do {
