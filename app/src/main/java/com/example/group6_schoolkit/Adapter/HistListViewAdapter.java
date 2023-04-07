@@ -53,6 +53,7 @@ public class HistListViewAdapter extends BaseAdapter {
         TextView txt = view.findViewById(R.id.txtTag);
         TextView txt2 = view.findViewById(R.id.txtDetails);
         txt2.setText(history.get(i));
+        txt.setText("");
 
         //
 

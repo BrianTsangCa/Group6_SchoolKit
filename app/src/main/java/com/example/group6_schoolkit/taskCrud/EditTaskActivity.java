@@ -294,9 +294,9 @@ public class EditTaskActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 switch (i){
-                    case 0: updatedStatus=0;
+                    case 0: updatedStatus=1;
                         Toast.makeText(EditTaskActivity.this, "Selected "+spinStatus.getSelectedItem(), Toast.LENGTH_SHORT).show();break;
-                    case 1:updatedStatus=1;
+                    case 1:updatedStatus=0;
                         Toast.makeText(EditTaskActivity.this, "Selected "+spinStatus.getSelectedItem(), Toast.LENGTH_SHORT).show();break;
                     default:break;
                 }
