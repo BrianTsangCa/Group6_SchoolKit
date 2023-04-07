@@ -83,7 +83,7 @@ public class MainActivityCal extends AppCompatActivity {
 //        CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), myDB.getAllTasks());
         CalendarAdapterRecycler adapterRecycler=new CalendarAdapterRecycler(daysInMonth, monthYearFromDate(selectedDate), tasksForUser, new CalendarAdapterRecycler.SetonClick_() {
             @Override
-            public void onClick_(int i, ArrayList<TaskModel> task, int j) {
+            public void onClick_(int i, ArrayList<TaskModel> task) {
                 //listview here
                 tasksReturned=task;
                 adapter = new TasksRecyclerViewAdapter(MainActivityCal.this);
@@ -97,7 +97,7 @@ public class MainActivityCal extends AppCompatActivity {
                     for (TaskModel t: task
                          ) {
 
-                        System.out.println(t.getTitle() + " "+ j);
+                        System.out.println(t.getTitle());
                     }
 
                 }catch (Exception e){
@@ -172,12 +172,14 @@ public class MainActivityCal extends AppCompatActivity {
     public void previousMonthAction(View view)
     {
         selectedDate = selectedDate.minusMonths(1);
+
         setMonthView();
     }
 
     public void nextMonthAction(View view)
     {
         selectedDate = selectedDate.plusMonths(1);
+
         setMonthView();
     }
 

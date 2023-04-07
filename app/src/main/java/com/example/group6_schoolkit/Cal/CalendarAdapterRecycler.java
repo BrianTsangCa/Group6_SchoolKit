@@ -68,10 +68,16 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
 
 
                 try{
-                    setonClick_.onClick_(holder.getAdapterPosition(),taskAndPosition.get(holder.getAdapterPosition()), taskAndPosition.get(holder.getAdapterPosition()).size());
+                    ArrayList<TaskModel> tasksToReturn = new ArrayList<>();
+                    if(taskAndPosition.get(holder.getAdapterPosition())==null){
+
+                    }else{
+                        tasksToReturn=taskAndPosition.get(holder.getAdapterPosition());
+                    }
+                    setonClick_.onClick_(holder.getAdapterPosition(),tasksToReturn);
 //                    taskToReturn.clear(); notifyDataSetChanged();
                 }catch (Exception e){
-
+                    System.out.println("ERROR from clicker try - catch" + e.getMessage());
                 }
 
 //                    taskToReturn=(taskAndPosition.get(holder.getAdapterPosition()));
@@ -229,7 +235,7 @@ public class CalendarAdapterRecycler extends RecyclerView.Adapter<CalendarAdapte
     }
 
     public interface SetonClick_{
-        public void onClick_(int i, ArrayList<TaskModel> task, int j);
+        public void onClick_(int i, ArrayList<TaskModel> task);
 //        public void taskToReturn(List<TaskModel> task);
 
     }
